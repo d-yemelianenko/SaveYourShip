@@ -4,53 +4,63 @@ using UnityEngine;
 
 public class CharController : MonoBehaviour
 {
-    private Rigidbody RB;
-
     public float Speed = 7;
     public float SprintSpeed = 13;
     public float JumpForce = 6;
+    private float ySpeed;
+    private float originalStepOffset;
 
-    public float Gravity = -15.0f;
-    private float verticalVelocity;
+    private CharacterController characterController;
 
     public bool InSprint;
-    public bool IsGrounded;
-    public LayerMask GroundMask;
 
     float Vertical;
     float Horizontal;
     void Start()
     {
-        RB = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
+        originalStepOffset = characterController.stepOffset;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        IsGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y - 1.6f, transform.position.z), 0.3f, GroundMask);
-
-        if(InSprint)
+        Horizontal = Input.GetAxis("Horizontal") * Speed;
+        if (InSprint)
         {
-            Horizontal = Input.GetAxis("Horizontal") * Speed;
             Vertical = Input.GetAxis("Vertical") * SprintSpeed;
         }
         else
         {
-            Horizontal = Input.GetAxis("Horizontal") * Speed;
             Vertical = Input.GetAxis("Vertical") * Speed;
         }
 
         Vector3 MovePosition = transform.right * Horizontal + transform.forward * Vertical;
-        Vector3 NewMovePosition = new Vector3(MovePosition.x, RB.velocity.y, MovePosition.z);
+        Vector3 NewMovePosition = new Vector3(MovePosition.x, 0, MovePosition.z);
+        float magnitude = Mathf.Clamp01(NewMovePosition.magnitude);
 
-        RB.velocity = NewMovePosition;
+        ySpeed += Physics.gravity.y * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded)
+        if (characterController.isGrounded)
         {
-            RB.velocity = new Vector3(RB.velocity.x, JumpForce, RB.velocity.z);
+            characterController.stepOffset = originalStepOffset;
+            ySpeed = -0.1f;
+            if (Input.GetButton("Jump"))
+            {
+                ySpeed = JumpForce;
+            }
+        }
+        else
+        {
+            characterController.stepOffset = 0;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && IsGrounded)
+        Vector3 velocity = NewMovePosition * magnitude;
+        velocity.y = ySpeed;
+
+
+        characterController.Move(velocity * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.LeftShift) && characterController.isGrounded)
         {
             InSprint = true;
         }
