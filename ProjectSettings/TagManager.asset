@@ -7,15 +7,17 @@ TagManager:
   - CinemachineTarget
   - Ground
   - Selectable
+  - Ship
+  - Ladder
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Character
+  - Player
   - Water
   - UI
   - Ground
-  - 
+  - Ship
   - 
   - 
   - 

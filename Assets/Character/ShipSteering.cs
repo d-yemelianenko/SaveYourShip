@@ -13,10 +13,13 @@ public class ShipSteering : MonoBehaviour
     private float second = 0;
     private int playTimeInSeconds = 0;
     [SerializeField]
-    private int SpeedUpTreshhold = 60;
+    private int TimeToSpeedUp = 60;
 
+    public LayerMask shipLayer;
+    private bool isPlayerOnBoard = false;
 
     private Rigidbody rb;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -30,24 +33,27 @@ public class ShipSteering : MonoBehaviour
             second -= 1.0f;
             playTimeInSeconds += 1;
 
-            if (playTimeInSeconds > 0 && playTimeInSeconds % SpeedUpTreshhold == 0)
+            if (playTimeInSeconds > 0 && playTimeInSeconds % TimeToSpeedUp == 0)
                 speed += speedUp;
         }
 
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        if (isPlayerOnBoard)
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        }
+        else
+        {
+            rb.velocity = transform.forward * speed;
+        }
     }
+
 
     public int getScore() //Zwraca wartoœæ czasu w sekundach jako wynik
     {
         return playTimeInSeconds;
     }
-    private void OnTriggerEnter(Collider other)
+    public void PlayerOnBoard()
     {
-        other.transform.SetParent(transform);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        other.transform.SetParent(null);
+        isPlayerOnBoard = true;
     }
 }

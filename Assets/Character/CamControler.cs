@@ -8,11 +8,6 @@ public class CamControler : MonoBehaviour
     public float Sensitivity = 1000;
     float xRotation;
 
-    void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
 
 
     void Update()

@@ -18,6 +18,7 @@ public class Toolbar : MonoBehaviour
         {
             //slot.icon.sprite = world.blocktypes[slotItemD].icon;
             slot.icon.enabled = true;
+            highlight.position = itemSlots[slotIndex].icon.transform.position;
         }
     }
     private void Update()

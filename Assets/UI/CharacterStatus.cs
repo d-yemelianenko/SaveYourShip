@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static Controller;
 
 public class CharacterStatus : MonoBehaviour
 {
@@ -33,21 +32,21 @@ public class CharacterStatus : MonoBehaviour
         //TODO efekt czêœciowej utraty g³odu (wolniejsze poruszanie siê)
         if(Hunger <= 50)
         {
-            Health -= 0.01f * Time.deltaTime;
+            Health -= 0.1f * Time.deltaTime;
         }
         if(Hunger <= 0)
         {
-            Health -= 0.02f * Time.deltaTime;
+            Health -= 0.2f * Time.deltaTime;
         }
 
         //TODO efekt czêœciowej utraty ciep³a (ograniczenie widzenia)
         if (Cold <= 50)
         {
-            Health -= 0.01f * Time.deltaTime;
+            Health -= 0.1f * Time.deltaTime;
         }
         if (Cold <= 0)
         {
-            Health -= 0.02f * Time.deltaTime;
+            Health -= 0.2f * Time.deltaTime;
         }
 
 
