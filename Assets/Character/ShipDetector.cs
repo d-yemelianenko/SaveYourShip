@@ -23,11 +23,6 @@ public class ShipDetector : MonoBehaviour
                 transform.SetParent(hit.collider.transform);
                 ship.PlayerOnBoard();
             }
-            else
-            {
-                isPlayerOnBoard = false;
-                transform.SetParent(null);
-            }
         }
         else
         {

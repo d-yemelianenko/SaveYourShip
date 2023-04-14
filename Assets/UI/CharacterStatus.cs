@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class CharacterStatus : MonoBehaviour
 {
-    [Range(0, 100)] public float Health;
-    [Range(0, 100)] public float Stamina;
-    [Range(0, 100)] public float Cold;
-    [Range(0, 100)] public float Hunger;
+    [SerializeField]
+    private GameObject playerCamera;
+
+    [Range(0, 100)] public float health;
+    [Range(0, 100)] public float stamina;
+    [Range(0, 100)] public float cold;
+    [Range(0, 100)] public float hunger;
 
     public Image HealthBar;
     public Image StaminaBar;
@@ -21,32 +24,36 @@ public class CharacterStatus : MonoBehaviour
 
     void Update()
     {
-        HealthBar.fillAmount = Health / 100;
-        StaminaBar.fillAmount = Stamina / 100;
-        ColdBar.fillAmount = Cold / 100;
-        HungerBar.fillAmount = Hunger / 100;
+        HealthBar.fillAmount = health / 100;
+        StaminaBar.fillAmount = stamina / 100;
+        ColdBar.fillAmount = cold / 100;
+        HungerBar.fillAmount = hunger / 100;
 
-        Hunger -= 0.1f * Time.deltaTime;   //Prêdkoœæ utraty g³odu
-        Cold -= 0.4f * Time.deltaTime;      //Prêdkoœæ utraty ciep³a
+        if(hunger >= 0)                         //Utrata punktów g³odu
+        {
+            hunger -= 0.1f * Time.deltaTime;    //Prêdkoœæ utraty g³odu
+        }
+        if(hunger <= 50)
+        {
+            health -= 0.1f * Time.deltaTime;
+        }
+        if(hunger <= 0)
+        {
+            health -= 0.6f * Time.deltaTime;
+        }
 
-        //TODO efekt czêœciowej utraty g³odu (wolniejsze poruszanie siê)
-        if(Hunger <= 50)
+        if (cold >= 0)
         {
-            Health -= 0.1f * Time.deltaTime;
+            cold -= 1.5f * Time.deltaTime;      //Prêdkoœæ utraty ciep³a
         }
-        if(Hunger <= 0)
+        if (cold <= 50)
         {
-            Health -= 0.2f * Time.deltaTime;
+            FrostEffect cameraObj = playerCamera.GetComponent<FrostEffect>();
+            cameraObj.SetFrost(cold / 100);
         }
-
-        //TODO efekt czêœciowej utraty ciep³a (ograniczenie widzenia)
-        if (Cold <= 50)
+        if (cold <= 10)
         {
-            Health -= 0.1f * Time.deltaTime;
-        }
-        if (Cold <= 0)
-        {
-            Health -= 0.2f * Time.deltaTime;
+            health -= 0.6f  * Time.deltaTime;
         }
 
 
@@ -57,6 +64,6 @@ public class CharacterStatus : MonoBehaviour
 
     void DecreaseStamina()
     {
-        Stamina -= 10f * Time.deltaTime; // zmniejsz wartoœæ stamina w czasie rzeczywistym
+        stamina -= 10f * Time.deltaTime; // zmniejsz wartoœæ stamina w czasie rzeczywistym
     }
 }
