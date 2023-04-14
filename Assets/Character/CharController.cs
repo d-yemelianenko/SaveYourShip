@@ -6,8 +6,10 @@ public class CharController : MonoBehaviour
 {
     [Header("Moving stats")]
     [SerializeField]
+    private float originSpeed = 7;
     private float speed = 7;
     [SerializeField]
+    private float originSprintSpeed = 13;
     private float sprintSpeed = 13;
     [SerializeField]
     private float jumpForce = 6;
@@ -33,14 +35,6 @@ public class CharController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         originalStepOffset = characterController.stepOffset;
     }
-    /*
-    private void FixedUpdate()
-    {
-        if (isOnLadder)
-        {
-            transform.Translate(Vector3.up * Time.deltaTime * 20.0f);
-        }
-    }*/
 
     void Update()
     {
@@ -108,12 +102,14 @@ public class CharController : MonoBehaviour
 
         characterController.Move(velocity * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.LeftShift) && characterController.isGrounded)
+        if (Input.GetKey(KeyCode.LeftShift) && GetComponent<CharacterStatus>().GetStamina() > 0)
         {
             inSprint = true;
+            GetComponent<CharacterStatus>().ChangeStamina(-10.0f);
         }
-        else
+        else if(GetComponent<CharacterStatus>().GetStamina() < 100)
         {
+            GetComponent<CharacterStatus>().ChangeStamina(5.0f);
             inSprint = false;
         }
     }
@@ -141,8 +137,7 @@ public class CharController : MonoBehaviour
         newMovePosition = new Vector3(movePosition.x, -slopeHit.point.y, movePosition.z );
     }
 
-    //Obs³uga drabiny
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) //Obs³uga drabiny
     {
         if (other.CompareTag("Ladder"))
         {
@@ -156,6 +151,13 @@ public class CharController : MonoBehaviour
         {
             isOnLadder = false;
         }
+    }
+
+    public void SetSpeedValue(float hunger)
+    {
+        float speedLimiter = (5 - hunger)/2;
+        speed = originSpeed - speedLimiter;
+        sprintSpeed = originSprintSpeed - speedLimiter;
     }
 
 }

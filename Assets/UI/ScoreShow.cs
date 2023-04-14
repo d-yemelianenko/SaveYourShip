@@ -9,6 +9,7 @@ public class ScoreShow : MonoBehaviour
     private GameObject shipObj;
 
     private TextMeshProUGUI scoreText;
+    private int score = 0;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class ScoreShow : MonoBehaviour
     void Update()
     {
         ShipSteering ship = shipObj.GetComponent<ShipSteering>();
-        int score = ship.getScore();
+        score = ship.getScore();
         scoreText.text = "Score: " + score.ToString() ;
     }
 }
