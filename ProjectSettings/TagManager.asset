@@ -9,6 +9,8 @@ TagManager:
   - Selectable
   - Ship
   - Ladder
+  - IceMountain
+  - IceCube
   layers:
   - Default
   - TransparentFX

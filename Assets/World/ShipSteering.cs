@@ -47,7 +47,6 @@ public class ShipSteering : MonoBehaviour
         }
     }
 
-
     public int getScore() //Zwraca wartoœæ czasu w sekundach jako wynik
     {
         return playTimeInSeconds;

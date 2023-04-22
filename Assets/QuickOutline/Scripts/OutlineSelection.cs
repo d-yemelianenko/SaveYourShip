@@ -19,10 +19,10 @@ public class OutlineSelection : MonoBehaviour
             highlight = null;
         }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit, 10f)) //Make sure you have EventSystem in the hierarchy before using EventSystem
+        if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit, 7f))
         {
             highlight = raycastHit.transform;
-            if (highlight.CompareTag("Selectable") && highlight != selection)
+            if ((highlight.CompareTag("Selectable") || highlight.CompareTag("IceCube")) && highlight != selection)
             {
                 if (highlight.gameObject.GetComponent<Outline>() != null)
                 {
