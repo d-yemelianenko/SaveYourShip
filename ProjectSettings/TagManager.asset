@@ -5,15 +5,24 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
+  - Ground
+  - Selectable
+  - Ship
+  - Ladder
+  - IceMountain
+  - InventoryManager
+  - Tools
+  - Inventory
+  - IceCube
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Character
+  - Player
   - Water
   - UI
-  - 
-  - 
+  - Ground
+  - Ship
   - 
   - 
   - 
