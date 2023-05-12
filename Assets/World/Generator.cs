@@ -7,6 +7,7 @@ public class Generator : MonoBehaviour
 {
     public GameObject iceCube;
     public GameObject [] sideMountain;
+    public GameObject[] iceMountain;
     public Vector3 cubePosition;
     public Vector3 mountainPosition;
 
@@ -16,7 +17,11 @@ public class Generator : MonoBehaviour
     [SerializeField]
     private float mapLength = 540;
     [SerializeField]
-    private float spawnIceBlockRate = 90;
+    private int spawnIceBlockRate = 80;
+    [SerializeField]
+    private int spawnIceMountainRate = 1;
+    [SerializeField]
+    private int spawnIceMountainBufor = 10;
 
 
     void Start()
@@ -25,24 +30,52 @@ public class Generator : MonoBehaviour
         SideMountainsGenerator();
     }
 
-    private void IceCubeGenerator()
+    private void IceCubeGenerator()   //Wype³nienie planszy bloczkami lodu i lodowymi górami
     {
-        GameObject cubeParentObject = new GameObject("iceCubes");   //Wype³nienie planszy bloczkami lodu
+        GameObject cubeParentObject = new GameObject("iceCubes");
+        GameObject iceMountainsParentObject = new GameObject("iceMountains");
 
-        for (var x = 0; x < mapWidth; x += 2)
+        int i = 0, j = 0; // j - tworzy przerwy w generowaniu gór lodowych,
+        for (var z = 0; z < mapLength; z += 2)
         {
-            for (var z = 0; z < mapLength; z += 2)
+            for (var x = 0; x < mapWidth; x += 2)
             {
                 System.Random rnd = new System.Random();
-                int randomInt = rnd.Next(0, 100);
+                int randomSpawnCube = rnd.Next(0, 100);
+                int randomSpawnIceMountain = rnd.Next(1, 1000);
 
                 cubePosition = iceCube.transform.position;
-                if ((x < 25 || x > 35 || z > 45) && randomInt <= spawnIceBlockRate)
+                if ((x < 25 || x > 35 || z > 45) && randomSpawnCube <= spawnIceBlockRate)
                 {
+                    if((z > 180 && z < mapLength - 20) && (x > 6 && x < 54) && j <= 0)
+                    {
+                        if (randomSpawnIceMountain <= spawnIceMountainRate) // Generowanie gór lodowych
+                        {
+                            int randomIceMountain = rnd.Next(0, iceMountain.Length);
+                            iceMountain[i] = Instantiate(iceMountain[randomIceMountain], new Vector3(cubePosition[0] + x, cubePosition[1], cubePosition[2] + z), Quaternion.identity);
+                            iceMountain[i].transform.parent = iceMountainsParentObject.transform;
+                            
+                            MeshCollider collider = iceMountain[i].GetComponent<MeshCollider>();    // Dodaj Collider w trybie Convex
+                            if (collider == null)
+                                collider = iceMountain[i].AddComponent<MeshCollider>();
+                            collider.convex = true;
+
+                            Rigidbody rigidbody = iceMountain[i].GetComponent<Rigidbody>();    // Dodaj Collider w trybie isKinematic
+                            if (rigidbody == null)
+                                rigidbody = iceMountain[i].AddComponent<Rigidbody>();
+                            rigidbody.useGravity = false;
+                            rigidbody.isKinematic = true;
+
+                            iceMountain[i].tag = "IceMountain";
+                            j = spawnIceMountainBufor;
+                        }
+                    }
                     GameObject cube = Instantiate(iceCube, new Vector3(cubePosition[0] + x, cubePosition[1], cubePosition[2] + z), Quaternion.identity);
                     cube.transform.parent = cubeParentObject.transform;
                 }
+
             }
+            if (j > 0) j--;
         }
     }
 
@@ -57,14 +90,8 @@ public class Generator : MonoBehaviour
             System.Random rnd = new System.Random();
             mountainPosition = sideMountain[0].transform.position;
             int randomInt = rnd.Next(0, sideMountain.Length);
-            Debug.Log(sideMountain.Length);
-            Debug.Log(randomInt);
             sideMountain[i] = Instantiate(sideMountain[randomInt], new Vector3(mountainPosition[0], mountainPosition[1], mountainPosition[2] + z), Quaternion.identity);
             sideMountain[i].transform.parent = mountainParentObject.transform;
-
-
-                //GameObject sideMountain[] = Instantiate(sideMountain[randomInt], new Vector3(mountainPosition[0], mountainPosition[1], mountainPosition[2] + z), Quaternion.identity);
-               // sideMountain.transform.parent = mountainParentObject.transform;
         }
     }
 }
