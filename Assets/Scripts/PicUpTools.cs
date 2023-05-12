@@ -5,7 +5,7 @@ using UnityEngine;
 public class PicUpTools : MonoBehaviour
 {
     public GameObject Maincamera;
-    public float distance = 7f;
+    public float distance = 2f;
     GameObject toolWeapon;
     bool canPicUp;
 
@@ -17,18 +17,23 @@ public class PicUpTools : MonoBehaviour
         
     }
     void PicUp()
-    {
+    {  
         RaycastHit hit;
         if(Physics.Raycast(Maincamera.transform.position,Maincamera.transform.forward,out hit, distance))
         {
             if (hit.transform.tag == "Tools")
             {
-                if (canPicUp) Drop();
+                if (canPicUp)
+                    Drop();
+               
                 toolWeapon = hit.transform.gameObject;
                 toolWeapon.GetComponent<Rigidbody>().isKinematic = true;
                 toolWeapon.transform.parent = transform;
-                toolWeapon.transform.localPosition = Vector3.zero;
-                toolWeapon.transform.localEulerAngles = new Vector3(5f, 0f, 0f);
+                Vector3 toolPosition = new Vector3(0.1f, -0.15f, 0.4f);
+                toolWeapon.transform.localPosition =Vector3.zero + toolPosition;
+               
+
+               toolWeapon.transform.localEulerAngles = new Vector3(10f, 0f, 20f);
                 canPicUp = true;
             }
         }

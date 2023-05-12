@@ -7,17 +7,17 @@ public class Zarzadzanie : MonoBehaviour
 {
     public void PlayNowa()
     {
-       SceneManager.LoadScene(2);
+       SceneManager.LoadScene(3);
     }
 
     public void Playkontynuj()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     public void PlayOptions()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     public void QuitPressed()

@@ -69,7 +69,7 @@ public class pauza : MonoBehaviour
     public void PlayMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu 2");
     }
     public void QuitGame()
     {

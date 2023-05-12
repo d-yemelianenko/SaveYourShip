@@ -8,10 +8,12 @@ public class paneli : MonoBehaviour
     // Start is called before the first frame update
     public GameObject PanelOpc;
     public GameObject PanelUst;
+    public GameObject PanelAutor;
 
     public void Start()
     {
         PanelUst.SetActive(false);
+        PanelAutor.SetActive(false);
         Time.timeScale = 1f;
     }
 
@@ -20,18 +22,37 @@ public class paneli : MonoBehaviour
         Debug.Log("Buton Pauzaust");
         PanelUst.SetActive(true);
         PanelOpc.SetActive(false);
-        
+        PanelAutor.SetActive(false);
+
     }
 
     public void PowrótClosePanelUst()
     {
-        Debug.Log("Buton Close PanelUst");
+      
         PanelUst.SetActive(false);
         PanelOpc.SetActive(true);
-       
+        PanelAutor.SetActive(false);
+
+
     }
 
+    public void ButtonOpenAutor()
+    {
+        Debug.Log("Buton Auto");
+        PanelOpc.SetActive(false);
+        PanelAutor.SetActive(true);
+        PanelUst.SetActive(false);
 
+    }
+
+    public void PowrótCloseAutor()
+    {
+        PanelAutor.SetActive(false);
+        PanelUst.SetActive(false);
+        PanelOpc.SetActive(true);
+
+
+    }
 
 
     public void PlayMenu()

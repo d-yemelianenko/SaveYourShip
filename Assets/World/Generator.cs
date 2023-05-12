@@ -6,7 +6,7 @@ using UnityEngine;
 public class Generator : MonoBehaviour
 {
     public GameObject iceCube;
-    public GameObject sideMmountain;
+    public GameObject [] sideMountain;
     public Vector3 cubePosition;
     public Vector3 mountainPosition;
 
@@ -50,14 +50,21 @@ public class Generator : MonoBehaviour
     {
         GameObject mountainParentObject = new GameObject("sideMountains");   //Generowanie gór bocznych dla jednego z 3 modu³ów mapy
 
+        int i = 0;
         for (var z = 180; z < mapLength; z += 180)
         {
+            i++;
             System.Random rnd = new System.Random();
-            int randomInt = rnd.Next(0, 5);
+            mountainPosition = sideMountain[0].transform.position;
+            int randomInt = rnd.Next(0, sideMountain.Length);
+            Debug.Log(sideMountain.Length);
+            Debug.Log(randomInt);
+            sideMountain[i] = Instantiate(sideMountain[randomInt], new Vector3(mountainPosition[0], mountainPosition[1], mountainPosition[2] + z), Quaternion.identity);
+            sideMountain[i].transform.parent = mountainParentObject.transform;
 
-            mountainPosition = sideMmountain.transform.position;
-            GameObject sideMountain = Instantiate(sideMmountain, new Vector3(mountainPosition[0], mountainPosition[1], mountainPosition[2] + z), Quaternion.identity);
-            sideMountain.transform.parent = mountainParentObject.transform;
+
+                //GameObject sideMountain[] = Instantiate(sideMountain[randomInt], new Vector3(mountainPosition[0], mountainPosition[1], mountainPosition[2] + z), Quaternion.identity);
+               // sideMountain.transform.parent = mountainParentObject.transform;
         }
     }
 }
