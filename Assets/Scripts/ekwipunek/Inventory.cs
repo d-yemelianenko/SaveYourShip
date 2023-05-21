@@ -9,6 +9,9 @@ public class Inventory : MonoBehaviour
 {
     [HideInInspector]
    public  List<Item> item;
+
+    public GameObject database;
+    public GameObject dzwiekBeczki;
     public GameObject cellContainer;
     public GameObject cellEkwipunek;
     public KeyCode showInventory;
@@ -21,8 +24,9 @@ public class Inventory : MonoBehaviour
 
     public KeyCode interactionKey = KeyCode.I;
 
-    private Transform playerCamera;
+   
     private bool isLookingAtWheel = false;
+
 
 
 
@@ -30,22 +34,25 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
+        item = new List<Item>();
         cellContainer.SetActive(true);
         cellEkwipunek.SetActive(false);
+        dzwiekBeczki.SetActive(false);
 
-       
-
-        item = new List<Item>();
-        for (int i = 0; i < cellEkwipunek.transform.childCount; i++)
+        for (int i = 1; i < cellEkwipunek.transform.childCount; i++) // naznaczamy numer itema
         {
             cellEkwipunek.transform.GetChild(i).GetComponent<CurrentItem>().index = i;
         }
-        for (int i = 0; i < cellContainer.transform.childCount; i++)
+     
+
+
+        for (int i = 1; i < cellContainer.transform.childCount; i++)
         {
             cellContainer.transform.GetChild(i).GetComponent<CurrentItem>().index = i;
         }
 
-            for (int i =0; i < cellContainer.transform.childCount; i++)
+        for (int i =1; i < cellContainer.transform.childCount; i++)
         {
            
             item.Add(new Item());
@@ -64,10 +71,12 @@ public class Inventory : MonoBehaviour
             
             if (Physics.Raycast(ray, out hit, 6f))
             {
-                    if (hit.collider.GetComponent<Item>())
-                    {
-                        AddItem(hit.collider.GetComponent<Item>());
-                    }
+                if (hit.collider.GetComponent<Item>())
+                {
+                    AudioSource pickUpSound = GetComponent<AudioSource>();
+                    pickUpSound.Play();
+                    AddItem(hit.collider.GetComponent<Item>());
+                }
             }
         }
         
@@ -100,6 +109,24 @@ public class Inventory : MonoBehaviour
             if (Input.GetKeyDown(interactionKey))
             {
                 ToggleEkwipunek();
+
+            }
+        }
+        else 
+        {
+            if (cellEkwipunek.activeSelf)
+            { 
+                   if (Input.GetKeyDown(interactionKey))
+                   {
+                        cellEkwipunek.SetActive(true);
+                        point.SetActive(false);
+                        player.enabled = false;
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+                        Time.timeScale = 0f;
+                        dzwiekBeczki.SetActive(true);
+                        dzwiekBeczki.SetActive(false);
+                   }             
             }
         }
     }
@@ -112,6 +139,7 @@ public class Inventory : MonoBehaviour
             if (item[i].id == 0)
             {
                 item[i] = currentItem;
+                item[i].countItem = 1;
                 DisplayItems();
                 Destroy(currentItem.gameObject);
                 break;
@@ -131,7 +159,11 @@ public class Inventory : MonoBehaviour
                 Time.timeScale = 1f;
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-            }
+                dzwiekBeczki.SetActive(true);
+                dzwiekBeczki.SetActive(false);
+
+
+        }
             else
             {
                 cellEkwipunek.SetActive(true);             
@@ -140,8 +172,10 @@ public class Inventory : MonoBehaviour
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 Time.timeScale = 0f;
+                dzwiekBeczki.SetActive(true);
+                dzwiekBeczki.SetActive(false);
 
-            }
+        }
         
 
     }
@@ -150,13 +184,14 @@ public class Inventory : MonoBehaviour
     {
         for(int i =0; i < item.Count; i++)
         { 
-            Transform cell = cellContainer.transform.GetChild(i);
+                Transform cell = cellContainer.transform.GetChild(i);
                 Transform icon = cell.GetChild(0);
-                Image img = icon.GetComponent<Image>();
+                Image img = icon.GetComponent<Image>();  
             if(item[i].id != 0)
-            {               
+            {         
                 img.enabled = true;
-                img.sprite = Resources.Load<Sprite>(item[i].pathIcon);
+                img.sprite = item[i].icon;
+               // Debug.Log(item[i].id);
             }
             else
             {

@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7999883838717708123
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -26.86625
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.043053
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.981371
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_Name
+      value: Ryba1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+--- !u!1 &7188908454866942474 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8a6105d26be943145a46742b4ecefc70, type: 3}
+  m_PrefabInstance: {fileID: 7999883838717708123}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &9016814216951009107
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7188908454866942474}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &6285264183392269551
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7188908454866942474}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.0656247, y: 1.074564, z: 2.849701}
+  m_Center: {x: -0.4417398, y: -0.0030700262, z: 0.11536876}
+--- !u!114 &4463188466004195087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7188908454866942474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81de95d6f907123468f144ed459d24c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameItem: ryba1
+  id: 1
+  countItem: 1
+  isRemovable: 1
+  isDroped: 1
+  icon: {fileID: 21300000, guid: 05c18af3166ea9d4e918fed2c5eff960, type: 3}
+  customEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CharacterStatus, Assembly-CSharp
+        m_MethodName: Eat
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 10
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CharacterStatus, Assembly-CSharp
+        m_MethodName: Healing
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 20
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

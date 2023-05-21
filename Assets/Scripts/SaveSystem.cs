@@ -4,35 +4,76 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class SaveSystem 
+public class SaveSystem : MonoBehaviour 
 {
-    public static void SavePlayer(CharacterStatus player)
-    {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/player.txt";
-        FileStream stream = new FileStream(path, FileMode.Create);
+    private string saveFilePath = "SaveData.txt";
+    public Transform PlayerTransform;
 
-        PlayerData data = new PlayerData(player);
-        formatter.Serialize(stream, data);
-        stream.Close();
+    public float posX , posY , posZ ;
+
+    private void Update()
+    {
+        
+    }
+    public void SavePlayer(CharacterStatus playerStatus)
+    {
+        using (StreamWriter writer = new StreamWriter(saveFilePath))
+        {
+            // Zapisz parametry postaci
+            writer.WriteLine(playerStatus.health);
+            writer.WriteLine(playerStatus.stamina);
+            writer.WriteLine(playerStatus.cold);
+            writer.WriteLine(playerStatus.hunger);
+
+            // Zapisz pozycjê gracza
+            writer.WriteLine(PlayerTransform.position.x);
+            writer.WriteLine(PlayerTransform.position.y);
+            writer.WriteLine(PlayerTransform.position.z);
+
+        }
+
+        Debug.Log("Zapisano dane gracza.");
     }
 
-    public static PlayerData LoadPlayer()
+    public void LoadPlayer(CharacterStatus playerStatus)
     {
-        string path = Application.persistentDataPath + "/player.txt";
-        if (File.Exists(path))
+        if (File.Exists(saveFilePath))
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
+            using (StreamReader reader = new StreamReader(saveFilePath))
+            {
+                // Odczytaj parametry postaci
+                playerStatus.health = float.Parse(reader.ReadLine());
+                playerStatus.stamina = float.Parse(reader.ReadLine());
+                playerStatus.cold = float.Parse(reader.ReadLine());
+                playerStatus.hunger = float.Parse(reader.ReadLine());
 
-            PlayerData data = formatter.Deserialize(stream) as PlayerData;
-            stream.Close();
-            return data;
+                       if (PlayerPrefs.HasKey("posX") || PlayerPrefs.HasKey("posY") || PlayerPrefs.HasKey("posZ"))
+                    {
+                        
+                        Time.timeScale = 1f;
+
+                    float posX = float.Parse(reader.ReadLine());
+                    float posY = float.Parse(reader.ReadLine());
+                    float posZ = float.Parse(reader.ReadLine());
+                    Debug.Log(posX);
+                    PlayerTransform.position = new Vector3(posX, posY, posZ);
+                }
+                else
+                {
+                    Debug.Log("Brak pliku z danymi gracza.");
+                }
+            }
+
+            Debug.Log("Wczytano dane gracza.");
         }
         else
         {
-            Debug.Log("Save file not found in" + path);
-            return null;
+            Debug.Log("Brak pliku z danymi gracza.");
         }
     }
+
+
 }
+   
+
+

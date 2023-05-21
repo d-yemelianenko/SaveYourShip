@@ -30,7 +30,7 @@ public class OutlineSelection : MonoBehaviour
             {
                 Destroy(highlight.gameObject);
             }
-            if ((highlight.CompareTag("Selectable") || highlight.CompareTag("IceCube") || highlight.CompareTag("Inventory")) && highlight != selection)
+            if ((highlight.CompareTag("Selectable") || highlight.CompareTag("IceCube") || highlight.CompareTag("Inventory") || highlight.CompareTag("Tools")) && highlight != selection)
             {
                 if (highlight.gameObject.GetComponent<Outline>() != null)
                 {

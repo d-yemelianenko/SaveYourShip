@@ -50,9 +50,12 @@ MonoBehaviour:
   nameItem: Wedka
   id: 0
   countItem: 1
-  isStackable: 1
-  pathIcon: Icon/wedka
-  pathPrefab: Prefabs/wedka
+  isRemovable: 0
+  isDroped: 0
+  icon: {fileID: 21300000, guid: 1074f7e92a7823b459288cf550f88a9d, type: 3}
+  customEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &935393132681904317
 GameObject:
   m_ObjectHideFlags: 0

@@ -105,11 +105,11 @@ public class CharController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && GetComponent<CharacterStatus>().GetStamina() > 0)
         {
             inSprint = true;
-            GetComponent<CharacterStatus>().ChangeStamina(-10.0f);
+            GetComponent<CharacterStatus>().ChangeStamina(-5.0f);
         }
         else if(GetComponent<CharacterStatus>().GetStamina() < 100)
         {
-            GetComponent<CharacterStatus>().ChangeStamina(5.0f);
+            GetComponent<CharacterStatus>().ChangeStamina(8.0f);
             inSprint = false;
         }
     }

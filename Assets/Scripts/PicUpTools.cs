@@ -8,6 +8,9 @@ public class PicUpTools : MonoBehaviour
     public float distance = 2f;
     GameObject toolWeapon;
     bool canPicUp;
+    Inventory inventory;
+    [HideInInspector]
+    public int index;
 
     // Update is called once per frame
     void Update()
@@ -17,23 +20,18 @@ public class PicUpTools : MonoBehaviour
         
     }
     void PicUp()
-    {  
+    {
         RaycastHit hit;
-        if(Physics.Raycast(Maincamera.transform.position,Maincamera.transform.forward,out hit, distance))
+        if (Physics.Raycast(Maincamera.transform.position, Maincamera.transform.forward, out hit, distance))
         {
-            if (hit.transform.tag == "Tools")
+            if (hit.transform.tag == "Tools" || hit.transform.tag == "Selectable")
             {
-                if (canPicUp)
-                    Drop();
-               
+                if (canPicUp) Drop();
                 toolWeapon = hit.transform.gameObject;
                 toolWeapon.GetComponent<Rigidbody>().isKinematic = true;
                 toolWeapon.transform.parent = transform;
-                Vector3 toolPosition = new Vector3(0.1f, -0.15f, 0.4f);
-                toolWeapon.transform.localPosition =Vector3.zero + toolPosition;
-               
-
-               toolWeapon.transform.localEulerAngles = new Vector3(10f, 0f, 20f);
+                toolWeapon.transform.localPosition = Vector3.zero;
+                toolWeapon.transform.localEulerAngles = new Vector3(5f, 0f, 0f);
                 canPicUp = true;
             }
         }
@@ -41,11 +39,13 @@ public class PicUpTools : MonoBehaviour
 
     void Drop()
     {
+
+        //// if (canPicUp)
+        //// {
         toolWeapon.transform.parent = null;
         toolWeapon.GetComponent<Rigidbody>().isKinematic = false;
         canPicUp = false;
         toolWeapon = null;
-
-
+        //}
     }
 }

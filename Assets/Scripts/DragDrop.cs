@@ -6,49 +6,39 @@ using UnityEngine.UI;
 
 public class DragDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    private RectTransform _rectTransform;
-    private Canvas _mainCanvas;
-    private RectTransform _slotRectTransform;
-    private Transform _currentSlotTransform;
-
+    public static GameObject dragedObject;
+    Inventory inventory;
     void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
-        _mainCanvas = GetComponentInParent<Canvas>();
-        _slotRectTransform = transform.parent.GetComponent<RectTransform>();
-        _currentSlotTransform = transform.parent;
+        inventory = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<Inventory>();
+    }
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        dragedObject = gameObject;
+        inventory.dragPrefab.SetActive(true);
+        inventory.dragPrefab.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        if (dragedObject.GetComponent<CurrentItem>())
+        {
+            int index = dragedObject.GetComponent<CurrentItem>().index;
+            inventory.dragPrefab.GetComponent<Image>().sprite = inventory.item[index].icon;
+            if(inventory.dragPrefab.GetComponent<Image>().sprite == null)
+            {
+                dragedObject = null;
+                inventory.dragPrefab.SetActive(false);
+            }
+           
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        _rectTransform.anchoredPosition += eventData.delta / _mainCanvas.scaleFactor;
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        _rectTransform.SetParent(_mainCanvas.transform);
-        _rectTransform.anchoredPosition += eventData.delta / _mainCanvas.scaleFactor;
-        _currentSlotTransform = transform.parent;
+        inventory.dragPrefab.transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        var slot = eventData.pointerEnter.GetComponent<Slot>();
-        if (slot != null && slot.transform != _currentSlotTransform)
-        {
-            _rectTransform.SetParent(slot.transform);
-            _rectTransform.anchoredPosition = Vector2.zero;
-            _currentSlotTransform = slot.transform;
-        }
-        else
-        {
-            _rectTransform.SetParent(_slotRectTransform);
-            _rectTransform.anchoredPosition = Vector2.zero;
-        }
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        OnEndDrag(eventData);
+        dragedObject = null ;
+        inventory.dragPrefab.SetActive(false);
+       //inventory.dragPrefab.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 }

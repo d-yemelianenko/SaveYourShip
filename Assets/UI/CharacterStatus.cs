@@ -7,6 +7,8 @@ public class CharacterStatus : MonoBehaviour
 {
     [SerializeField]
     private GameObject playerCamera;
+    public SaveSystem saveSystem;
+    public Transform PlayerTransform;
 
     [Range(0, 100)] public float health;
     [Range(0, 100)] public float stamina;
@@ -19,7 +21,8 @@ public class CharacterStatus : MonoBehaviour
     public Image HungerBar;
 
     private float coldChange = -1.0f;
-    private float coldChangeModifier = 0.0f;
+    [SerializeField]
+    private float coldChangeModifier = 0.5f;
 
     public CameraShake cameraShake;
     private bool healthy = false;
@@ -33,7 +36,7 @@ public class CharacterStatus : MonoBehaviour
 
         if(hunger >= 0)                         //Utrata punktów g³odu
         {
-            hunger -= 2.0f * Time.deltaTime;    //Prêdkoœæ utraty g³odu
+            hunger -= 0.5f * Time.deltaTime;    //Prêdkoœæ utraty g³odu
         }
 
         if (hunger <= 50)
@@ -46,26 +49,26 @@ public class CharacterStatus : MonoBehaviour
         }
         if (hunger <= 0)
         {
-            health -= 1.5f * Time.deltaTime;
+            health -= 0.5f * Time.deltaTime;
         }
 
         if (coldChange < 0)
         {
             if (cold >= 0)                          //Utrata punktów ciep³a
             {
-                cold += coldChange * Time.deltaTime;      //Prêdkoœæ utraty ciep³a
+                cold += coldChange * Time.deltaTime * coldChangeModifier;      //Prêdkoœæ utraty ciep³a
             }
         }
         else if (coldChange > 0)
             if (cold <= 100)                          //Utrata punktów ciep³a
             {
-                cold += coldChange * Time.deltaTime;      //Prêdkoœæ utraty ciep³a
+                cold += coldChange * Time.deltaTime * coldChangeModifier;      //Prêdkoœæ utraty ciep³a
             }
 
 
         if (cold >= 0 && cold <= 100)                          //Utrata punktów ciep³a
         {
-            cold += coldChange * Time.deltaTime;      //Prêdkoœæ utraty ciep³a
+            cold += coldChange * Time.deltaTime * coldChangeModifier;      //Prêdkoœæ utraty ciep³a
         }
 
         if (cold <= 50)
@@ -111,24 +114,25 @@ public class CharacterStatus : MonoBehaviour
         coldChange = coldChange + changeValue;
     }
 
+    public void Healing(float healValue)
+    {
+        health += healValue;
+    }
+
+    public void Eat(float eatValue)
+    {
+        hunger += eatValue;
+    }
+
     public void SavePlayer()
     {
-        SaveSystem.SavePlayer(this);
+        saveSystem.SavePlayer(this);
     }
-
     public void LoadPlayer()
     {
-        PlayerData data = SaveSystem.LoadPlayer();
-        health = data.health;
-        stamina = data.stamina;
-        cold =data.cold;
-        hunger =data.hunger;
-
-        Vector3 position;
-        position.x = data.position[0];
-        position.y = data.position[1];
-        position.z = data.position[2];
-        transform.position = position;
+        saveSystem.LoadPlayer(this);
     }
+
+
 }
 

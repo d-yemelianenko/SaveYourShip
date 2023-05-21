@@ -9,8 +9,7 @@ public class DestroyCube : MonoBehaviour
 
 	public int life;
 	private int maxLife = 3;
-	
-	
+
 	void Start()
 	{
 		life = Mathf.Clamp(life, 1, maxLife);
@@ -34,5 +33,7 @@ public class DestroyCube : MonoBehaviour
 	{
 		ParticleSystem particleSystem = transform.parent.GetComponent<ParticleSystem>();
 		particleSystem.Play();
+		AudioSource audioSource = transform.parent.GetComponent<AudioSource>();
+		audioSource.Play(); // Odtwórz dŸwiêk przed zniszczeniem obiektu
 	}
 }
