@@ -12,6 +12,4 @@ public class Item : MonoBehaviour
     public bool isDroped;
     public Sprite icon;
     public UnityEvent customEvent;
-   
-
 }

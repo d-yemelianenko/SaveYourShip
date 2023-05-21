@@ -8,8 +8,9 @@ using UnityEngine.EventSystems;
 public class Inventory : MonoBehaviour
 {
     [HideInInspector]
-   public  List<Item> item;
+    public List<Item> item;
 
+    public Fishing fishing;
     public GameObject database;
     public GameObject dzwiekBeczki;
     public GameObject cellContainer;
@@ -18,23 +19,21 @@ public class Inventory : MonoBehaviour
     public KeyCode takeButton;
     public CharacterController player;
     public GameObject dragPrefab;
-  //  public FirstPersonController player;
+    public SwitchFlash switchFlash;
+    //  public FirstPersonController player;
 
     public GameObject point;
 
-    public KeyCode interactionKey = KeyCode.I;
+    public KeyCode interactionKey = KeyCode.E;
 
-   
     private bool isLookingAtWheel = false;
-
-
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-       
+
         item = new List<Item>();
         cellContainer.SetActive(true);
         cellEkwipunek.SetActive(false);
@@ -44,17 +43,14 @@ public class Inventory : MonoBehaviour
         {
             cellEkwipunek.transform.GetChild(i).GetComponent<CurrentItem>().index = i;
         }
-     
-
 
         for (int i = 1; i < cellContainer.transform.childCount; i++)
         {
             cellContainer.transform.GetChild(i).GetComponent<CurrentItem>().index = i;
         }
 
-        for (int i =1; i < cellContainer.transform.childCount; i++)
+        for (int i = 1; i < cellContainer.transform.childCount; i++)
         {
-           
             item.Add(new Item());
         }
     }
@@ -63,28 +59,51 @@ public class Inventory : MonoBehaviour
     void Update()
     {
         ShowInventory();
-       // ToggleEkwipunek();
-        if (Input.GetKeyDown(takeButton))
+        // ToggleEkwipunek();
+        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 6f))
         {
-            Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
-            RaycastHit hit;
-            
-            if (Physics.Raycast(ray, out hit, 6f))
+            Item item = hit.collider.GetComponent<Item>();
+            if (item != null && (item.id != 1 && item.id != 2))
             {
-                if (hit.collider.GetComponent<Item>())
+                if (Input.GetKeyDown(takeButton))
                 {
                     AudioSource pickUpSound = GetComponent<AudioSource>();
                     pickUpSound.Play();
                     AddItem(hit.collider.GetComponent<Item>());
                 }
             }
+            else if (item != null && (item.id == 1 || item.id == 2) && switchFlash.toolsTable[1])
+            {
+                fishing = hit.collider.GetComponent<Fishing>();
+                fishing.SetOnFishingStatus();
+                if (fishing.isFishCaught == true)
+                {
+                    AudioSource pickUpSound = GetComponent<AudioSource>();
+                    pickUpSound.Play();
+                    AddItem(hit.collider.GetComponent<Item>());
+                    fishing.isFishCaught = false;
+                    fishing.SetOffFishingStatus();
+                }
+            }
+            else if (item == null)
+            {
+                if (fishing != null && fishing.isBeingWatched)
+                {
+                    fishing.SetOffFishingStatus();
+                }
+            }
         }
-        
+        else if (fishing != null && fishing.isBeingWatched)
+        {
+            fishing.SetOffFishingStatus();
+        }
     }
-    
+
     void ShowInventory()
     {
-       
         Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
         RaycastHit hit;
 
@@ -104,33 +123,31 @@ public class Inventory : MonoBehaviour
             isLookingAtWheel = false;
         }
         // Rotate the steering wheel based on player input
-       if (isLookingAtWheel)
+        if (isLookingAtWheel)
         {
             if (Input.GetKeyDown(interactionKey))
             {
                 ToggleEkwipunek();
-
             }
         }
-        else 
+        else
         {
             if (cellEkwipunek.activeSelf)
-            { 
-                   if (Input.GetKeyDown(interactionKey))
-                   {
-                        cellEkwipunek.SetActive(true);
-                        point.SetActive(false);
-                        player.enabled = false;
-                        Cursor.visible = true;
-                        Cursor.lockState = CursorLockMode.None;
-                        Time.timeScale = 0f;
-                        dzwiekBeczki.SetActive(true);
-                        dzwiekBeczki.SetActive(false);
-                   }             
+            {
+                if (Input.GetKeyDown(interactionKey))
+                {
+                    cellEkwipunek.SetActive(true);
+                    point.SetActive(false);
+                    player.enabled = false;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Time.timeScale = 0f;
+                    dzwiekBeczki.SetActive(true);
+                    dzwiekBeczki.SetActive(false);
+                }
             }
         }
     }
-
 
     void AddItem(Item currentItem)
     {
@@ -151,47 +168,42 @@ public class Inventory : MonoBehaviour
 
     void ToggleEkwipunek()
     {
-            if (cellEkwipunek.activeSelf)
-            {           
-                cellEkwipunek.SetActive(false) ;
-                player.enabled = true;
-                point.SetActive(true);
-                Time.timeScale = 1f;
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                dzwiekBeczki.SetActive(true);
-                dzwiekBeczki.SetActive(false);
-
-
+        if (cellEkwipunek.activeSelf)
+        {
+            cellEkwipunek.SetActive(false);
+            player.enabled = true;
+            point.SetActive(true);
+            Time.timeScale = 1f;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            dzwiekBeczki.SetActive(true);
+            dzwiekBeczki.SetActive(false);
         }
-            else
-            {
-                cellEkwipunek.SetActive(true);             
-                point.SetActive(false);
-                player.enabled = false ;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                Time.timeScale = 0f;
-                dzwiekBeczki.SetActive(true);
-                dzwiekBeczki.SetActive(false);
-
+        else
+        {
+            cellEkwipunek.SetActive(true);
+            point.SetActive(false);
+            player.enabled = false;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0f;
+            dzwiekBeczki.SetActive(true);
+            dzwiekBeczki.SetActive(false);
         }
-        
-
     }
 
-   public void DisplayItems()
+    public void DisplayItems()
     {
-        for(int i =0; i < item.Count; i++)
-        { 
-                Transform cell = cellContainer.transform.GetChild(i);
-                Transform icon = cell.GetChild(0);
-                Image img = icon.GetComponent<Image>();  
-            if(item[i].id != 0)
-            {         
+        for (int i = 0; i < item.Count; i++)
+        {
+            Transform cell = cellContainer.transform.GetChild(i);
+            Transform icon = cell.GetChild(0);
+            Image img = icon.GetComponent<Image>();
+            if (item[i].id != 0)
+            {
                 img.enabled = true;
                 img.sprite = item[i].icon;
-               // Debug.Log(item[i].id);
+                // Debug.Log(item[i].id);
             }
             else
             {
@@ -201,5 +213,4 @@ public class Inventory : MonoBehaviour
         }
     }
 
-  
 }

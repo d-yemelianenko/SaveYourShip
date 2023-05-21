@@ -4,22 +4,57 @@ using UnityEngine;
 
 public class SwitchFlash : MonoBehaviour
 {
-    
-    public void  switchFlashM(GameObject flash1)
+    public Inventory inventory;
+    public bool[] toolsTable = new bool[3];     // 0 - mlot, 1 - wedka, 2 - pochodnia
+    [SerializeField]
+    private GameObject mlot, wedka, pochodnia;
+    public void switchFlashM()
     {
-        flash1.SetActive(!flash1.activeSelf);
+        if (toolsTable[1])
+        {
+            wedka.SetActive(!wedka.activeSelf);
+        }
+        if (toolsTable[2])
+        {
+            pochodnia.SetActive(!pochodnia.activeSelf);
+        }
+        mlot.SetActive(!mlot.activeSelf);
+        SetActiveTool(0);
     }
 
-    public void switchFlashW(GameObject flash2)
+    public void switchFlashW()
     {
-        flash2.SetActive(!flash2.activeSelf);
-        
+        if (toolsTable[0])
+        {
+            mlot.SetActive(!mlot.activeSelf);
+        }
+        if (toolsTable[2])
+        {
+            pochodnia.SetActive(!pochodnia.activeSelf);
+        }
+        SetActiveTool(1);
+        wedka.SetActive(!wedka.activeSelf);
     }
 
-    public void switchFlashP(GameObject flash3)
+    public void switchFlashP()
     {
-        flash3.SetActive(!flash3.activeSelf);
+        if (toolsTable[0])
+        {
+            mlot.SetActive(!mlot.activeSelf);
+        }
+        if (toolsTable[1])
+        {
+            wedka.SetActive(!wedka.activeSelf);
+        }
+        SetActiveTool(2);
+        pochodnia.SetActive(!pochodnia.activeSelf);
     }
-
-   
+    public void SetActiveTool(int clicked)
+    {
+        for (int i = 0; i < toolsTable.Length; i++)
+        {
+            if (i == clicked && !toolsTable[clicked]) toolsTable[clicked] = true;
+            else toolsTable[i] = false;
+        }
+    }
 }

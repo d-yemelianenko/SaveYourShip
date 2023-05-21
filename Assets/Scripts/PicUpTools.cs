@@ -15,11 +15,11 @@ public class PicUpTools : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) PicUp();
+        if (Input.GetKeyDown(KeyCode.E)) PickUp();
         if (Input.GetKeyDown(KeyCode.Q)) Drop();
         
     }
-    void PicUp()
+    void PickUp()
     {
         RaycastHit hit;
         if (Physics.Raycast(Maincamera.transform.position, Maincamera.transform.forward, out hit, distance))
