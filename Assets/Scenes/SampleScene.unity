@@ -140,7 +140,6 @@ GameObject:
   - component: {fileID: 36687900}
   - component: {fileID: 36687901}
   - component: {fileID: 36687902}
-  - component: {fileID: 36687903}
   - component: {fileID: 36687904}
   m_Layer: 3
   m_Name: Player
@@ -308,23 +307,6 @@ MonoBehaviour:
     icon: {fileID: 1455715703}
   - itemID: 0
     icon: {fileID: 807512646}
---- !u!114 &36687903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 36687891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20e3fd005bd488b459f65bb9820e6611, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
-  toolsTable: 000000
-  mlot: {fileID: 0}
-  wedka: {fileID: 0}
-  pochodnia: {fileID: 0}
 --- !u!114 &36687904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2774,7 +2756,7 @@ PrefabInstance:
     - target: {fileID: 8300548795661393948, guid: 8a5d276a58af49b4daa5de7ead4179ba, type: 3}
       propertyPath: customEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 36687903}
+      objectReference: {fileID: 0}
     - target: {fileID: 8300548795661393948, guid: 8a5d276a58af49b4daa5de7ead4179ba, type: 3}
       propertyPath: customEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: switchFlashP
@@ -6805,6 +6787,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7534507376898285744, guid: ad9bf7eb3c54489428754bf9bb86dbf0, type: 3}
   m_PrefabInstance: {fileID: 1283154376}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1145075480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1145075481}
+  - component: {fileID: 1145075482}
+  m_Layer: 8
+  m_Name: AnimMlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1145075481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145075480}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8293153512851277351}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1145075482
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145075480}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3421d2172358bca46855e48c8602b22d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1156747623
 GameObject:
   m_ObjectHideFlags: 0
@@ -9170,6 +9205,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineDistance: 7
+  switchFlash: {fileID: 1641879949}
+  anim: {fileID: 8673057133316070563}
+  mlot: {fileID: 8673057133316070557}
   interactionKey: 323
 --- !u!224 &1418573203 stripped
 RectTransform:
@@ -10820,7 +10858,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1626679576
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10891,6 +10929,7 @@ GameObject:
   - component: {fileID: 1641879947}
   - component: {fileID: 1641879948}
   - component: {fileID: 1641879949}
+  - component: {fileID: 1641879950}
   m_Layer: 3
   m_Name: Hand
   m_TagString: Untagged
@@ -10948,6 +10987,18 @@ MonoBehaviour:
   mlot: {fileID: 8673057133316070557}
   wedka: {fileID: 1646304486}
   pochodnia: {fileID: 1012320444}
+--- !u!114 &1641879950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641879946}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fa9abeb571e9454ca544fd4717dd4b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1646304484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11060,7 +11111,7 @@ MonoBehaviour:
   customEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 36687903}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SwitchFlash, Assembly-CSharp
         m_MethodName: switchFlashW
         m_Mode: 2
@@ -18206,6 +18257,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2136100701224294451, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136100701224294451, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2658865820819364287, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
@@ -18213,9 +18268,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2658865820819364287, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
+      propertyPath: customEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2658865820819364287, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
       propertyPath: customEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 36687903}
+      objectReference: {fileID: 1641879949}
     - target: {fileID: 2658865820819364287, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
       propertyPath: customEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: switchFlashM
@@ -18223,7 +18282,11 @@ PrefabInstance:
     - target: {fileID: 2658865820819364287, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
       propertyPath: customEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 8673057133316070557}
+      objectReference: {fileID: 0}
+    - target: {fileID: 2658865820819364287, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
+      propertyPath: customEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5818265268225166479, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -18294,7 +18357,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5960307297809264023, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
-    - {fileID: 2136100701224294451, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ac1d9fa3d5b3d684698e8c964d398196, type: 3}
 --- !u!1001 &2754665070259292627
 PrefabInstance:
@@ -18833,7 +18895,7 @@ Animator:
   m_GameObject: {fileID: 8673057133316070557}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 928fb06781ad64b4abdf3ae430f010b8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3421d2172358bca46855e48c8602b22d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

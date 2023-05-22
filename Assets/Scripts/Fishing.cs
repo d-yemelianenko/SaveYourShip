@@ -21,7 +21,6 @@ public class Fishing : MonoBehaviour
 
     private void Update()
     {
-        
         CheckIceCube();
         if (!isCubeAbove)
         {

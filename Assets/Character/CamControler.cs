@@ -8,8 +8,6 @@ public class CamControler : MonoBehaviour
     public float Sensitivity = 1000;
     float xRotation;
 
-
-
     void Update()
     {
         float MouseX = Input.GetAxis("Mouse X") * Sensitivity * Time.deltaTime;

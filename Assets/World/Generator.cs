@@ -13,9 +13,9 @@ public class Generator : MonoBehaviour
 
     [Header("Wymiary mapy")]
     [SerializeField]
-    private float mapWidth = 60;
+    private float mapWidth = 40;
     [SerializeField]
-    private float mapLength = 540;
+    private float mapLength = 360;
     [SerializeField]
     private int spawnIceBlockRate = 80;
     [SerializeField]
@@ -36,16 +36,16 @@ public class Generator : MonoBehaviour
         GameObject iceMountainsParentObject = new GameObject("iceMountains");
 
         int i = 0, j = 0; // j - tworzy przerwy w generowaniu gór lodowych,
-        for (var z = 0; z < mapLength; z += 2)
+        for (var z = 0; z < mapLength; z += 3)
         {
-            for (var x = 0; x < mapWidth; x += 2)
+            for (var x = 0; x < mapWidth; x += 3)
             {
                 System.Random rnd = new System.Random();
                 int randomSpawnCube = rnd.Next(0, 100);
                 int randomSpawnIceMountain = rnd.Next(1, 1000);
 
                 cubePosition = iceCube.transform.position;
-                if ((x < 25 || x > 35 || z > 45) && randomSpawnCube <= spawnIceBlockRate)
+                if ((x < 24 || x > 36 || z > 46) && randomSpawnCube <= spawnIceBlockRate)   // Wyrwa na statek
                 {
                     if((z > 180 && z < mapLength - 20) && (x > 6 && x < 54) && j <= 0)
                     {
