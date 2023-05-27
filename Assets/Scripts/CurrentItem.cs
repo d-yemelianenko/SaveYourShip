@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CurrentItem : MonoBehaviour, IPointerClickHandler ,IDropHandler
+public class CurrentItem : MonoBehaviour, IPointerClickHandler 
 {
       [HideInInspector]
     public int index;
@@ -12,11 +12,6 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler ,IDropHandler
     GameObject inventoryObj;
     Inventory inventory;
     GameObject toolWeapon;
-
-
-
-
-
     void Start()
     {
         inventoryObj = GameObject.FindGameObjectWithTag("InventoryManager");
@@ -27,14 +22,19 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler ,IDropHandler
 
         if (eventData.button == PointerEventData.InputButton.Left) // U¿ycie przedmiotu
         {
-            if (inventory.item[index].customEvent != null)
-            {
-                inventory.item[index].customEvent.Invoke(); // invent zadzia³a przy klikaniu na lew¹ czeœæ myszy za pomoca Invoke
+            if (inventory.item[index].isDroped)// sprawdzenie czy  pusty slot czy nie
+            { 
+                if (inventory.item[index].customEvent != null)
+                {
+                    inventory.item[index].customEvent.Invoke(); // invent zadzia³a przy klikaniu na lew¹ czeœæ myszy za pomoca Invoke
+                }
+                if (inventory.item[index].isRemovable)// przedmiot mozna  delete
+                {
+                    Remove();
+                }
+
             }
-            if (inventory.item[index].isRemovable)// przedmiot mozna  delete
-            {
-                Remove();
-            }
+               
             inventory.DisplayItems();
         }
 
@@ -86,9 +86,9 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler ,IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         GameObject dragedObject = DragDrop.dragedObject;
-        if(dragedObject == null)        
+        if (dragedObject == null)
         {
-          return;
+            return;
         }
         CurrentItem currentdragedItem = dragedObject.GetComponent<CurrentItem>();
         if (currentdragedItem)

@@ -5,6 +5,7 @@ public class Fishing : MonoBehaviour
 {
     public bool isBeingWatched = false;
     public bool isFishCaught = false;
+    [SerializeField]
     private float watchTime = 1.0f;
     private float elapsedTime = 0f;
     private Slider progressBar;

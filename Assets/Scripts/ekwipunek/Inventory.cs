@@ -21,6 +21,8 @@ public class Inventory : MonoBehaviour
     public GameObject dragPrefab;
     public SwitchFlash switchFlash;
     //  public FirstPersonController player;
+	[SerializeField]
+	private GameObject playerObj;
 
     public GameObject point;
 
@@ -75,7 +77,7 @@ public class Inventory : MonoBehaviour
                     AddItem(hit.collider.GetComponent<Item>());
                 }
             }
-            else if (item != null && (item.id == 1 || item.id == 2) && switchFlash.toolsTable[1])
+            else if (item != null && (item.id == 1 || item.id == 2) && switchFlash.toolsTable[1]) //wedka
             {
                 fishing = hit.collider.GetComponent<Fishing>();
                 fishing.SetOnFishingStatus();

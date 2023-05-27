@@ -5,6 +5,10 @@ using UnityEngine;
 public class SwitchFlash : MonoBehaviour
 {
     public Inventory inventory;
+    [SerializeField]
+    private GameObject playerObj;
+    [SerializeField]
+    private float warmChangeValue = 0.2f;
     public bool[] toolsTable = new bool[3];     // 0 - mlot, 1 - wedka, 2 - pochodnia
     [SerializeField]
     private GameObject mlot, wedka, pochodnia;
@@ -17,6 +21,8 @@ public class SwitchFlash : MonoBehaviour
         if (toolsTable[2])
         {
             pochodnia.SetActive(!pochodnia.activeSelf);
+            CharacterStatus player = playerObj.GetComponent<CharacterStatus>();
+            player.ColdChange(warmChangeValue*(-1));
         }
         mlot.SetActive(!mlot.activeSelf);
         SetActiveTool(0);
@@ -32,6 +38,8 @@ public class SwitchFlash : MonoBehaviour
         if (toolsTable[2])
         {
             pochodnia.SetActive(!pochodnia.activeSelf);
+            CharacterStatus player = playerObj.GetComponent<CharacterStatus>();
+            player.ColdChange(warmChangeValue*(-1));
         }
         SetActiveTool(1);
         wedka.SetActive(!wedka.activeSelf);
@@ -49,6 +57,8 @@ public class SwitchFlash : MonoBehaviour
         }
         SetActiveTool(2);
         pochodnia.SetActive(!pochodnia.activeSelf);
+        CharacterStatus player = playerObj.GetComponent<CharacterStatus>();
+        player.ColdChange(warmChangeValue);
     }
     public void SetActiveTool(int clicked)
     {
