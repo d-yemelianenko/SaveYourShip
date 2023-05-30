@@ -11,15 +11,18 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
 
     GameObject inventoryObj;
     Inventory inventory;
-    GameObject toolWeapon;
+    GameObject cannonObj;
+    Cannon cannon;
     void Start()
     {
         inventoryObj = GameObject.FindGameObjectWithTag("InventoryManager");
         inventory = inventoryObj.GetComponent<Inventory>();
+        cannonObj = GameObject.FindGameObjectWithTag("Cannon");
+        cannon = cannonObj.GetComponent<Cannon>();
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-
+        cannon.SetItemId(index);
         if (eventData.button == PointerEventData.InputButton.Left) // U¿ycie przedmiotu
         {
             if (inventory.item[index].isDroped)// sprawdzenie czy  pusty slot czy nie
@@ -30,7 +33,7 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
                 }
                 if (inventory.item[index].isRemovable)// przedmiot mozna  delete
                 {
-                    Remove();
+                    Remove(index);
                 }
 
             }
@@ -43,25 +46,27 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
             if (inventory.item[index].isDroped)// sprawdzenie czy  pusty slot czy nie
             {
                 Drop();
-                Remove();
+                Remove(index);
             }
             inventory.DisplayItems();
         }
     }
 
-        void Remove() // zmniejszenia illoœci item in colection
+    public void Remove(int index) // zmniejszenia iloœci item in colection
+    {
+        Debug.Log(index);
+        if (inventory.item[index].countItem > 1)
         {
-            if (inventory.item[index].countItem > 1)
-            {
-                inventory.item[index].countItem--; // illoœæ przedmiotó w inwentarze
-            }
-            else
-            {
-                inventory.item[index] = new Item();
-            }
+            inventory.item[index].countItem--; // iloœæ przedmiotów w inwentarzu
         }
+        else
+        {
+            inventory.item[index] = new Item();
+        }
+        inventory.DisplayItems();
+    }
 
-        void Drop()
+    void Drop()
         {
             if (inventory.item[index].id != 0)// sprawdzenie czy  pusty slot czy nie
             {
@@ -96,7 +101,7 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
             Item currentItem = inventory.item[GetComponent<CurrentItem>().index];
             inventory.item[GetComponent<CurrentItem>().index] = inventory.item[currentdragedItem.index];
             inventory.item[currentdragedItem.index] = currentItem;
-            inventory.DisplayItems();// pererisowywajem
+            inventory.DisplayItems();   // pererisowywajem
 
         }
     }

@@ -6,15 +6,14 @@ using UnityEngine.EventSystems;
 public class OutlineSelection : MonoBehaviour
 {
     private Transform highlight;
-    private Transform selection;
     private RaycastHit raycastHit;
     [SerializeField]
     private float outlineDistance = 7f;
     [SerializeField]
     private SwitchFlash switchFlash;
     [SerializeField]
-    public Animator anim;
-    public GameObject mlot;
+    public Animator animHammer;
+    public GameObject hammer;
     private float smashAnimTime = 0.8f;
     private float elapsedTime = 0f;
 
@@ -22,8 +21,7 @@ public class OutlineSelection : MonoBehaviour
 
     private void Start()
     {
-        //mlot.enabled = false;
-       anim = mlot.GetComponent<Animator>();
+       animHammer = hammer.GetComponent<Animator>();
     }
 
     void Update()
@@ -41,14 +39,14 @@ public class OutlineSelection : MonoBehaviour
         {
             highlight = raycastHit.transform;
 
-            if (highlight.CompareTag("IceCube") && highlight != selection && Input.GetKey(interactionKey) && switchFlash.toolsTable[0])
+            if (highlight.CompareTag("IceCube") &&  Input.GetKey(interactionKey) && switchFlash.toolsTable[0])
             {
-                anim.SetBool("Atak", true);
+                animHammer.SetBool("Atak", true);
                 elapsedTime += Time.deltaTime;
-                Debug.Log(elapsedTime);
+                //Debug.Log(elapsedTime);
                 if (elapsedTime >= smashAnimTime)// Gracz patrzy³ na rybê przez wymagany czas
                 {
-                    anim.SetBool("Atak", false);
+                    animHammer.SetBool("Atak", false);
                     Destroy(highlight.gameObject);
                     elapsedTime = 0;
                 }
@@ -56,11 +54,11 @@ public class OutlineSelection : MonoBehaviour
             if (Input.GetKeyUp(interactionKey))
             {
                 elapsedTime = 0;
-                anim.SetBool("Atak", false);
+                animHammer.SetBool("Atak", false);
             }
 
             // Podœwietlanie
-            if ((highlight.CompareTag("Selectable") || highlight.CompareTag("IceCube") || highlight.CompareTag("Inventory") || highlight.CompareTag("Tools")) && highlight != selection)
+            if ((highlight.CompareTag("Selectable") || highlight.CompareTag("Cannon") || highlight.CompareTag("IceCube") || highlight.CompareTag("Inventory") || highlight.CompareTag("Tools")))
             {
                 if (highlight.gameObject.GetComponent<Outline>() != null)
                 {

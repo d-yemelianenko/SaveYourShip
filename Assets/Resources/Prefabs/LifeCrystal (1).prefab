@@ -80,7 +80,7 @@ MonoBehaviour:
   nameItem: Crystal
   id: 5
   countItem: 1
-  isRemovable: 1
+  isRemovable: 0
   isDroped: 1
   icon: {fileID: 21300000, guid: dcd6e5c2c90271d4a958228ce4ef6e99, type: 3}
   customEvent:

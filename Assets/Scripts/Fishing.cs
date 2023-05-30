@@ -44,7 +44,6 @@ public class Fishing : MonoBehaviour
 
             if (elapsedTime >= watchTime)// Gracz patrzy³ na rybê przez wymagany czas
             {
-                Debug.Log("Z³apana");
                 SetOffFishingStatus();
                 isFishCaught = true;
             }

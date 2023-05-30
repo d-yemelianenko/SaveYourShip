@@ -19,9 +19,11 @@ public class Inventory : MonoBehaviour
     public KeyCode takeButton;
     public CharacterController player;
     public GameObject dragPrefab;
-    public SwitchFlash switchFlash;
+    public SwitchFlash switchFlash; 
+    private int selectedSlotIndex = -1; // domyœlnie brak wybranego slotu (-1 oznacza brak wybranego slotu)
+
     //  public FirstPersonController player;
-	[SerializeField]
+    [SerializeField]
 	private GameObject playerObj;
 
     public GameObject point;
@@ -35,23 +37,22 @@ public class Inventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         item = new List<Item>();
         cellContainer.SetActive(true);
         cellEkwipunek.SetActive(false);
         dzwiekBeczki.SetActive(false);
 
-        for (int i = 1; i < cellEkwipunek.transform.childCount; i++) // naznaczamy numer itema
+        for (int i = 0; i < cellEkwipunek.transform.childCount; i++) // naznaczamy numer itema
         {
             cellEkwipunek.transform.GetChild(i).GetComponent<CurrentItem>().index = i;
         }
 
-        for (int i = 1; i < cellContainer.transform.childCount; i++)
+        for (int i = 0; i < cellContainer.transform.childCount; i++)
         {
             cellContainer.transform.GetChild(i).GetComponent<CurrentItem>().index = i;
         }
 
-        for (int i = 1; i < cellContainer.transform.childCount; i++)
+        for (int i = 0; i < cellContainer.transform.childCount; i++)
         {
             item.Add(new Item());
         }
@@ -68,7 +69,7 @@ public class Inventory : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 6f))
         {
             Item item = hit.collider.GetComponent<Item>();
-            if (item != null && (item.id != 1 && item.id != 2))
+            if (item != null && (item.id != 1 && item.id != 2)) //Podnoszenie przedmiotów innych ni¿ rybka
             {
                 if (Input.GetKeyDown(takeButton))
                 {
@@ -124,7 +125,7 @@ public class Inventory : MonoBehaviour
         {
             isLookingAtWheel = false;
         }
-        // Rotate the steering wheel based on player input
+
         if (isLookingAtWheel)
         {
             if (Input.GetKeyDown(interactionKey))
@@ -159,6 +160,7 @@ public class Inventory : MonoBehaviour
             {
                 item[i] = currentItem;
                 item[i].countItem = 1;
+                selectedSlotIndex = i;
                 DisplayItems();
                 Destroy(currentItem.gameObject);
                 break;
@@ -180,6 +182,7 @@ public class Inventory : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             dzwiekBeczki.SetActive(true);
             dzwiekBeczki.SetActive(false);
+            selectedSlotIndex = -1;
         }
         else
         {

@@ -9,9 +9,9 @@ public class SwitchFlash : MonoBehaviour
     private GameObject playerObj;
     [SerializeField]
     private float warmChangeValue = 0.2f;
-    public bool[] toolsTable = new bool[3];     // 0 - mlot, 1 - wedka, 2 - pochodnia
+    public bool[] toolsTable = new bool[4];     // 0 - mlot, 1 - wedka, 2 - pochodnia, 3 - kula
     [SerializeField]
-    private GameObject mlot, wedka, pochodnia;
+    private GameObject mlot, wedka, pochodnia, cannonball;
     public void switchFlashM()
     {
         if (toolsTable[1])
@@ -23,6 +23,10 @@ public class SwitchFlash : MonoBehaviour
             pochodnia.SetActive(!pochodnia.activeSelf);
             CharacterStatus player = playerObj.GetComponent<CharacterStatus>();
             player.ColdChange(warmChangeValue*(-1));
+        }
+        if (toolsTable[3])
+        {
+            cannonball.SetActive(!cannonball.activeSelf);
         }
         mlot.SetActive(!mlot.activeSelf);
         SetActiveTool(0);
@@ -41,6 +45,10 @@ public class SwitchFlash : MonoBehaviour
             CharacterStatus player = playerObj.GetComponent<CharacterStatus>();
             player.ColdChange(warmChangeValue*(-1));
         }
+        if (toolsTable[3])
+        {
+            cannonball.SetActive(!cannonball.activeSelf);
+        }
         SetActiveTool(1);
         wedka.SetActive(!wedka.activeSelf);
     }
@@ -55,10 +63,34 @@ public class SwitchFlash : MonoBehaviour
         {
             wedka.SetActive(!wedka.activeSelf);
         }
+        if (toolsTable[3])
+        {
+            cannonball.SetActive(!cannonball.activeSelf);
+        }
         SetActiveTool(2);
         pochodnia.SetActive(!pochodnia.activeSelf);
         CharacterStatus player = playerObj.GetComponent<CharacterStatus>();
         player.ColdChange(warmChangeValue);
+    }
+
+    public void switchFlashC()
+    {
+        if (toolsTable[0])
+        {
+            mlot.SetActive(!mlot.activeSelf);
+        }
+        if (toolsTable[1])
+        {
+            wedka.SetActive(!wedka.activeSelf);
+        }
+        if (toolsTable[2])
+        {
+            pochodnia.SetActive(!pochodnia.activeSelf);
+            CharacterStatus player = playerObj.GetComponent<CharacterStatus>();
+            player.ColdChange(warmChangeValue * (-1));
+        }
+        SetActiveTool(3);
+        cannonball.SetActive(!cannonball.activeSelf);
     }
     public void SetActiveTool(int clicked)
     {
