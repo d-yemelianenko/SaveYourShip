@@ -9,7 +9,7 @@ public class Cannon : MonoBehaviour
     [SerializeField]
     public Animator animTorch;
     public GameObject torch;*/
-
+    
     public Transform shootPoint; // Punkt, z kt�rego wychodzi pocisk
     private Transform highlight;
     private RaycastHit raycastHit;
@@ -19,6 +19,10 @@ public class Cannon : MonoBehaviour
     private SwitchFlash switchFlash;
     [SerializeField]
     private CurrentItem currentItem;
+    [SerializeField]
+    private GameObject boomEffect;
+    [SerializeField]
+    private GameObject boomEffectMountain;
     private float cannonActivationTime = 0.8f;
     private float elapsedTime = 0f;
     private int index;
@@ -48,7 +52,7 @@ public class Cannon : MonoBehaviour
 
             if (highlight.CompareTag("Cannon") && Input.GetKey(interactionKey) && isLoaded && switchFlash.toolsTable[2])
             {
-                GetComponent<ParticleSystem>().Play();
+                boomEffect.GetComponent<ParticleSystem>().Play();
                 GetComponent<AudioSource>().Play();
                 isLoaded = false;
                 RaycastHit hit;
@@ -56,6 +60,9 @@ public class Cannon : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("IceMountain"))
                     {
+                        ParticleSystem particle = boomEffectMountain.GetComponent<ParticleSystem>();
+                        particle.transform.position = hit.collider.transform.position;
+                        particle.Play();
                         // Zniszcz obiekt góry
                         Destroy(hit.collider.gameObject);
                     }
