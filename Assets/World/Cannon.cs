@@ -3,14 +3,14 @@ using UnityEngine;
 public class Cannon : MonoBehaviour
 {
     /*
-    public Transform shootPoint; // Punkt, z którego wychodzi pocisk
     public GameObject bulletPrefab; // Prefab pocisku
     public GameObject explosionPrefab; // Prefab efektu eksplozji
-    public AudioClip shootSound; // DŸwiêk wystrza³u
+    public AudioClip shootSound; // Dï¿½wiï¿½k wystrzaï¿½u
     [SerializeField]
     public Animator animTorch;
     public GameObject torch;*/
 
+    public Transform shootPoint; // Punkt, z ktï¿½rego wychodzi pocisk
     private Transform highlight;
     private RaycastHit raycastHit;
     [SerializeField]
@@ -35,24 +35,31 @@ public class Cannon : MonoBehaviour
     private void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!isLoaded && Physics.Raycast(ray, out raycastHit, usingDistance))
+        if (Physics.Raycast(ray, out raycastHit, usingDistance))
         {
             highlight = raycastHit.transform;
 
-            if (highlight.CompareTag("Cannon") && Input.GetKey(interactionKey) && switchFlash.toolsTable[3])
+            if (highlight.CompareTag("Cannon") && Input.GetKey(interactionKey) && !isLoaded && switchFlash.toolsTable[3])
             {
                 isLoaded = true;
                 currentItem.Remove(index);
                 switchFlash.switchFlashC();
-                //Destroy(highlight.gameObject);
-                //animTorch.SetBool("Atak", true);
-                //elapsedTime += Time.deltaTime;
-                //Debug.Log(elapsedTime);
-                //if (elapsedTime >= smashAnimTime)// Gracz patrzy³ na rybê przez wymagany czas
-                //{
-                //    animHammer.SetBool("Atak", false);
-                //    elapsedTime = 0;
-                //}
+            }
+
+            if (highlight.CompareTag("Cannon") && Input.GetKey(interactionKey) && isLoaded && switchFlash.toolsTable[2])
+            {
+                GetComponent<ParticleSystem>().Play();
+                GetComponent<AudioSource>().Play();
+                isLoaded = false;
+                RaycastHit hit;
+                if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit))
+                {
+                    if (hit.collider.CompareTag("IceMountain"))
+                    {
+                        // Zniszcz obiekt gÃ³ry
+                        Destroy(hit.collider.gameObject);
+                    }
+                }
             }
         }
     }
@@ -64,13 +71,13 @@ public class Cannon : MonoBehaviour
 
     /*private void LoadBullet()
     {
-        if (isLoaded) return; // Je¿eli armata jest ju¿ za³adowana, nie wykonuj kolejnej ³adowania
+        if (isLoaded) return; // Jeï¿½eli armata jest juï¿½ zaï¿½adowana, nie wykonuj kolejnej ï¿½adowania
 
-        // Stwórz now¹ instancjê pocisku na pozycji shootPoint
+        // Stwï¿½rz nowï¿½ instancjï¿½ pocisku na pozycji shootPoint
         GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-        isLoaded = true; // Armata jest teraz za³adowana
+        isLoaded = true; // Armata jest teraz zaï¿½adowana
 
-        // Odtwórz dŸwiêk wystrza³u
+        // Odtwï¿½rz dï¿½wiï¿½k wystrzaï¿½u
         if (shootSound != null)
         {
             AudioSource.PlayClipAtPoint(shootSound, transform.position);
@@ -79,29 +86,29 @@ public class Cannon : MonoBehaviour
 
     public void Fire()
     {
-        if (!isLoaded) return; // Je¿eli armata nie jest za³adowana, nie wykonuj strza³u
+        if (!isLoaded) return; // Jeï¿½eli armata nie jest zaï¿½adowana, nie wykonuj strzaï¿½u
 
         // Wystrzel pocisk
         GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
         Destroy(bullet, 5f); // Zniszcz pocisk po 5 sekundach
 
-        // SprawdŸ trafienie w obiekt góry za pomoc¹ Raycasta
+        // Sprawdï¿½ trafienie w obiekt gï¿½ry za pomocï¿½ Raycasta
         RaycastHit hit;
         if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit))
         {
             if (hit.collider.CompareTag("Gora"))
             {
-                // Zniszcz obiekt góry
+                // Zniszcz obiekt gï¿½ry
                 Destroy(hit.collider.gameObject);
             }
         }
 
-        // Wywo³aj efekt eksplozji na pozycji trafienia
+        // Wywoï¿½aj efekt eksplozji na pozycji trafienia
         if (explosionPrefab != null)
         {
             Instantiate(explosionPrefab, hit.point, Quaternion.identity);
         }
 
-        isLoaded = false; // Armata jest teraz roz³adowana
+        isLoaded = false; // Armata jest teraz rozï¿½adowana
     }*/
 }
