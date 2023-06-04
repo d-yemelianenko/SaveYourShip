@@ -71,21 +71,25 @@ public class Fishing : MonoBehaviour
         elapsedTime = 0f;
         progressBar.gameObject.SetActive(false);
     }
-    
+
     private void CheckIceCube()
     {
-        Ray ray = new Ray(transform.position, Vector3.up);
+        Ray ray = new Ray(transform.parent.position, Vector3.up); 
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, raycastDistance))
         {
-            if (hit.collider.CompareTag("IceCube"))
+            if (hit.collider.CompareTag("IceCube") || hit.collider.CompareTag("IceMountain") || hit.collider.CompareTag("Ship"))
             {
                 isCubeAbove = true;
             }
-            else isCubeAbove = false;
+            else
+            {
+                isCubeAbove = false;
+            }
         }
     }
+
 
     private Canvas CreateCanvas()
     {

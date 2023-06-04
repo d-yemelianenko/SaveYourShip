@@ -25,13 +25,13 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
         cannon.SetItemId(index);
         if (eventData.button == PointerEventData.InputButton.Left) // U¿ycie przedmiotu
         {
-            if (inventory.item[index].isDroped)// sprawdzenie czy  pusty slot czy nie
+            if (inventory.item[index].isDroped) // sprawdzenie czy  pusty slot czy nie
             { 
                 if (inventory.item[index].customEvent != null)
                 {
-                    inventory.item[index].customEvent.Invoke(); // invent zadzia³a przy klikaniu na lew¹ czeœæ myszy za pomoca Invoke
+                    inventory.item[index].customEvent.Invoke(); // invent zadzia³a przy klikaniu lewym przyiskiem myszy za pomoca Invoke
                 }
-                if (inventory.item[index].isRemovable)// przedmiot mozna  delete
+                if (inventory.item[index].isRemovable) // przedmiot mozna  usun¹æ
                 {
                     Remove(index);
                 }
@@ -43,7 +43,39 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
 
         if (eventData.button == PointerEventData.InputButton.Right) // Wyrzucenie przedmiotu
         {
-            if (inventory.item[index].isDroped)// sprawdzenie czy  pusty slot czy nie
+            if (inventory.item[index].isDroped)// sprawdzenie czy pusty slot czy nie
+            {
+                Drop();
+                Remove(index);
+            }
+            inventory.DisplayItems();
+        }
+    }
+
+    public void ChooseActiveItem(PointerEventData eventData)
+    {
+        cannon.SetItemId(index);
+        if (eventData.button == PointerEventData.InputButton.Left) // U¿ycie przedmiotu
+        {
+            if (inventory.item[index].isDroped) // sprawdzenie czy  pusty slot czy nie
+            {
+                if (inventory.item[index].customEvent != null)
+                {
+                    inventory.item[index].customEvent.Invoke(); // invent zadzia³a przy klikaniu lewym przyiskiem myszy za pomoca Invoke
+                }
+                if (inventory.item[index].isRemovable) // przedmiot mozna  usun¹æ
+                {
+                    Remove(index);
+                }
+
+            }
+
+            inventory.DisplayItems();
+        }
+
+        if (eventData.button == PointerEventData.InputButton.Right) // Wyrzucenie przedmiotu
+        {
+            if (inventory.item[index].isDroped)// sprawdzenie czy pusty slot czy nie
             {
                 Drop();
                 Remove(index);
@@ -68,7 +100,7 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
 
     void Drop()
         {
-            if (inventory.item[index].id != 0)// sprawdzenie czy  pusty slot czy nie
+            if (inventory.item[index].id != 0)// sprawdzenie czy pusty slot czy nie
             {
                 for(int i=0; i< inventory.database.transform.childCount; i++)
                 {
@@ -87,7 +119,7 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
                 
             }
         }
-
+    /*
     public void OnDrop(PointerEventData eventData)
     {
         GameObject dragedObject = DragDrop.dragedObject;
@@ -104,5 +136,5 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
             inventory.DisplayItems();   // pererisowywajem
 
         }
-    }
+    }*/
 }
