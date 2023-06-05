@@ -35,7 +35,6 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
                 {
                     Remove(index);
                 }
-
             }
                
             inventory.DisplayItems();
@@ -52,12 +51,10 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void ChooseActiveItem(PointerEventData eventData)
+    public void ChooseActiveItem()
     {
         cannon.SetItemId(index);
-        if (eventData.button == PointerEventData.InputButton.Left) // U¿ycie przedmiotu
-        {
-            if (inventory.item[index].isDroped) // sprawdzenie czy  pusty slot czy nie
+            if (inventory.item[index].isDroped) // sprawdzenie czy pusty slot czy nie
             {
                 if (inventory.item[index].customEvent != null)
                 {
@@ -67,21 +64,9 @@ public class CurrentItem : MonoBehaviour, IPointerClickHandler
                 {
                     Remove(index);
                 }
-
             }
 
             inventory.DisplayItems();
-        }
-
-        if (eventData.button == PointerEventData.InputButton.Right) // Wyrzucenie przedmiotu
-        {
-            if (inventory.item[index].isDroped)// sprawdzenie czy pusty slot czy nie
-            {
-                Drop();
-                Remove(index);
-            }
-            inventory.DisplayItems();
-        }
     }
 
     public void Remove(int index) // zmniejszenia iloœci item in colection

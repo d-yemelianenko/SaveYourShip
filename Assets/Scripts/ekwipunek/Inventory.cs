@@ -20,6 +20,7 @@ public class Inventory : MonoBehaviour
     public SwitchFlash switchFlash;
     private int selectedSlotIndex = 0; // domyœlnie brak wybranego slotu (-1 oznacza brak wybranego slotu)
     public KeyCode interactionKey;
+    public CurrentItem[] currentItem;
 
     //  public FirstPersonController player;
     [SerializeField]
@@ -109,6 +110,14 @@ public class Inventory : MonoBehaviour
         {
             fishing.SetOffFishingStatus();
         }
+
+        if (Input.GetKeyUp(KeyCode.Alpha1)) currentItem[0].ChooseActiveItem();
+        if (Input.GetKeyUp(KeyCode.Alpha2)) currentItem[1].ChooseActiveItem();
+        if (Input.GetKeyUp(KeyCode.Alpha3)) currentItem[2].ChooseActiveItem();
+        if (Input.GetKeyUp(KeyCode.Alpha4)) currentItem[3].ChooseActiveItem();
+        if (Input.GetKeyUp(KeyCode.Alpha5)) currentItem[4].ChooseActiveItem();
+        if (Input.GetKeyUp(KeyCode.Alpha6)) currentItem[5].ChooseActiveItem();
+
     }
 
     void ShowInventory()
@@ -160,6 +169,7 @@ public class Inventory : MonoBehaviour
 
     void AddItem(Item currentItem)
     {
+        Debug.Log(currentItem.id);
         for (int i = 0; i < item.Count; i++)
         {
             if (item[i].id == 0)
@@ -172,6 +182,18 @@ public class Inventory : MonoBehaviour
                 break;
             }
         }
+    }
+
+    void AddItem(Item currentItem, int slotNr)
+    {
+            if (item[slotNr].id == 0)
+            {
+                item[slotNr] = currentItem;
+                item[slotNr].countItem = 1;
+                selectedSlotIndex = slotNr;
+                DisplayItems();
+                Destroy(currentItem.gameObject);
+            }
     }
 
     void ToggleEkwipunek()
@@ -205,6 +227,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < item.Count; i++)
         {
+
             Transform cell = cellContainer.transform.GetChild(i);
             Transform icon = cell.GetChild(0);
             Image img = icon.GetComponent<Image>();
