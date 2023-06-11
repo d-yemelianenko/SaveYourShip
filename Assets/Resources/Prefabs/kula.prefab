@@ -112,7 +112,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -128,12 +128,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81de95d6f907123468f144ed459d24c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tile: {fileID: 0}
+  icon: {fileID: 21300000, guid: c49dec645e591114caac11d081103cfc, type: 3}
   nameItem: Kula
   id: 3
   countItem: 1
   isRemovable: 0
   isDroped: 1
-  icon: {fileID: 21300000, guid: c49dec645e591114caac11d081103cfc, type: 3}
   customEvent:
     m_PersistentCalls:
       m_Calls:

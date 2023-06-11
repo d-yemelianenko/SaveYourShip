@@ -76,46 +76,5 @@ public class Cannon : MonoBehaviour
         index = currentId;
     }
 
-    /*private void LoadBullet()
-    {
-        if (isLoaded) return; // Je�eli armata jest ju� za�adowana, nie wykonuj kolejnej �adowania
 
-        // Stw�rz now� instancj� pocisku na pozycji shootPoint
-        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-        isLoaded = true; // Armata jest teraz za�adowana
-
-        // Odtw�rz d�wi�k wystrza�u
-        if (shootSound != null)
-        {
-            AudioSource.PlayClipAtPoint(shootSound, transform.position);
-        }
-    }
-
-    public void Fire()
-    {
-        if (!isLoaded) return; // Je�eli armata nie jest za�adowana, nie wykonuj strza�u
-
-        // Wystrzel pocisk
-        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-        Destroy(bullet, 5f); // Zniszcz pocisk po 5 sekundach
-
-        // Sprawd� trafienie w obiekt g�ry za pomoc� Raycasta
-        RaycastHit hit;
-        if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit))
-        {
-            if (hit.collider.CompareTag("Gora"))
-            {
-                // Zniszcz obiekt g�ry
-                Destroy(hit.collider.gameObject);
-            }
-        }
-
-        // Wywo�aj efekt eksplozji na pozycji trafienia
-        if (explosionPrefab != null)
-        {
-            Instantiate(explosionPrefab, hit.point, Quaternion.identity);
-        }
-
-        isLoaded = false; // Armata jest teraz roz�adowana
-    }*/
 }

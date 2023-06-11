@@ -30,7 +30,6 @@ public class SwitchFlash : MonoBehaviour
         }
         mlot.SetActive(!mlot.activeSelf);
         SetActiveTool(0);
-        
     }
 
     public void switchFlashW()

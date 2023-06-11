@@ -6,7 +6,7 @@ public class ShipDurability : MonoBehaviour
 {
     public GameObject PlayerInterface;
     public GameObject InventoryPanel;
-    public GameObject GameOwer;
+    public GameObject GameOver;
     public Texture2D durabilityTexture;
     public int maxStamina = 5;
     public int stamina = 5;
@@ -14,7 +14,7 @@ public class ShipDurability : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        GameOwer.SetActive(false);
+        GameOver.SetActive(false);
         Time.timeScale = 1f;
     }
     void OnGUI()
@@ -29,13 +29,13 @@ public class ShipDurability : MonoBehaviour
             
             if (stamina <= 0)
             {
-                Debug.Log("Statek sie rozwal³");
-              //  Cursor.lockState = CursorLockMode.None;
-              //  Cursor.visible = true;
-               // GameOwer.SetActive(true);
-               // Time.timeScale = 0;
-             //   PlayerInterface.SetActive(false);
-              //  InventoryPanel.SetActive(false);
+                //Debug.Log("Statek sie rozwal³");
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                GameOver.SetActive(true);
+                Time.timeScale = 0;
+                PlayerInterface.SetActive(false);
+                InventoryPanel.SetActive(false);
 
             }
         }

@@ -7,7 +7,7 @@ public class SteeringWheel : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
-    public float rotateSpeed = 10f;
+    public float rotateSpeed = 7f;
     public KeyCode interactionKey = KeyCode.E;
 
     private Transform playerCamera;
@@ -50,11 +50,19 @@ public class SteeringWheel : MonoBehaviour
             }
             float rotationInput = Input.GetAxis("Horizontal");
             float xPosition = transform.parent.position.x + (rotationInput * 0.01f);
-            transform.parent.position = new Vector3(xPosition, transform.parent.position.y, transform.parent.position.z);
-            float rotationAngleZ = transform.rotation.eulerAngles.z - (rotationInput * rotateSpeed); 
-            float rotationAngleY = transform.rotation.eulerAngles.y - (rotationInput);
+            if (xPosition < 22 && xPosition > -26)
+            {
+                transform.parent.position = new Vector3(xPosition, transform.parent.position.y, transform.parent.position.z);
+                float rotationAngleZ = transform.rotation.eulerAngles.z - (rotationInput * rotateSpeed);
+                transform.rotation = Quaternion.Euler(0f, 0f, rotationAngleZ);
+            }
+            else
+            {
+                if (xPosition < 22) xPosition += 0.1f;
+                else xPosition -= 0.1f;
+            }
+            //float rotationAngleY = transform.rotation.eulerAngles.y - (rotationInput);
             //transform.parent.rotation = Quaternion.Euler(0f, -rotationAngleY, 0f);
-            transform.rotation = Quaternion.Euler(0f, 0f, rotationAngleZ);
         }
 
         // Rotate the steering wheel based on player input

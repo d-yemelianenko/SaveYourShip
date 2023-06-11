@@ -34,7 +34,6 @@ public class Inventory : MonoBehaviour
     private bool isLookingAtBarrel = false;
 
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -117,7 +116,6 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Alpha4)) currentItem[3].ChooseActiveItem();
         if (Input.GetKeyUp(KeyCode.Alpha5)) currentItem[4].ChooseActiveItem();
         if (Input.GetKeyUp(KeyCode.Alpha6)) currentItem[5].ChooseActiveItem();
-
     }
 
     void ShowInventory()

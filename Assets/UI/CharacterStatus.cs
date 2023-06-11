@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterStatus : MonoBehaviour
 {
+
     [SerializeField]
     private GameObject playerCamera;
     public SaveSystem saveSystem;
@@ -24,8 +25,9 @@ public class CharacterStatus : MonoBehaviour
     [SerializeField]
     private float coldChangeModifier = 0.5f;
 
-    public CameraShake cameraShake;
-    private bool healthy = false;
+    [SerializeField] public GameObject GameOver;
+    [SerializeField] public GameObject PlayerInterface;
+    [SerializeField] public GameObject InventoryPanel;
 
     void Update()
     {
@@ -42,6 +44,7 @@ public class CharacterStatus : MonoBehaviour
         if (hunger <= 50)
         {
             GetComponent<CharController>().SetSpeedValue(hunger/10);
+            health -= 0.2f * Time.deltaTime;
         }
         else if(hunger > 50)
         {
@@ -49,7 +52,7 @@ public class CharacterStatus : MonoBehaviour
         }
         if (hunger <= 0)
         {
-            health -= 0.5f * Time.deltaTime;
+            health -= 1.5f * Time.deltaTime;
         }
 
         if (coldChange < 0)
@@ -75,10 +78,11 @@ public class CharacterStatus : MonoBehaviour
         {
             FrostEffect cameraObj = playerCamera.GetComponent<FrostEffect>();
             cameraObj.SetFrost(cold / 100);
+            health -= 0.2f * Time.deltaTime;
         }
-        if (cold <= 10)
+        if (cold <= 5)
         {
-            health -= 1.0f  * Time.deltaTime;
+            health -= 3.0f  * Time.deltaTime;
         }
 
         /*
@@ -93,9 +97,15 @@ public class CharacterStatus : MonoBehaviour
             cameraShake.StopShake();
             healthy = false;
         }*/
+
         if (health <= 0)                //Przywo³anie ekranu koñca gry
         {
-            Debug.Log("Umar³ w butach");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            GameOver.SetActive(true);
+            Time.timeScale = 0;
+            PlayerInterface.SetActive(false);
+            InventoryPanel.SetActive(false);
         }
 
     }

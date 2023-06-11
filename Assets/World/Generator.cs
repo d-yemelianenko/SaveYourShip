@@ -96,11 +96,11 @@ public class Generator : MonoBehaviour
         GameObject mountainParentObject = new GameObject("sideMountains");   //Generowanie gór bocznych dla jednego z 3 modu³ów mapy
 
         int i = 0;
+        mountainPosition = sideMountain[0].transform.position;
         for (var z = 180; z <= mapLength; z += 180)
         {
             i++;
             System.Random rnd = new System.Random();
-            mountainPosition = sideMountain[0].transform.position;
             int randomInt = rnd.Next(0, sideMountain.Length);
             sideMountain[randomInt] = Instantiate(sideMountain[randomInt], new Vector3(mountainPosition[0], mountainPosition[1], mountainPosition[2] + z), Quaternion.identity);
             sideMountain[randomInt].transform.parent = mountainParentObject.transform;
