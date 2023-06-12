@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipDurability : MonoBehaviour
@@ -26,17 +24,14 @@ public class ShipDurability : MonoBehaviour
                 GUI.DrawTexture(new Rect(20 + i * 90, 10, 80, 70), durabilityTexture);
             }
             
-            
             if (stamina <= 0)
             {
-                //Debug.Log("Statek sie rozwal³");
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 GameOver.SetActive(true);
                 Time.timeScale = 0;
                 PlayerInterface.SetActive(false);
                 InventoryPanel.SetActive(false);
-
             }
         }
     }

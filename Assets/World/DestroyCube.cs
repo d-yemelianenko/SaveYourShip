@@ -7,18 +7,16 @@ public class DestroyCube : MonoBehaviour
 	[SerializeField]
 	private GameObject shipObj;
 
-	public int life;
-	private int maxLife = 3;
+	[SerializeField]
+	private ParticleSystem cubeDestroyParticles;
+	[SerializeField]
+	private AudioSource cubeDestroyAudio;
 
-	void Start()
-	{
-		life = Mathf.Clamp(life, 1, maxLife);
-	}
-
-	private void OnTriggerEnter(Collider other) //Efekt niszczenia przez gracza w pliku OutlineSelection
+	private void OnTriggerEnter(Collider other) //Efekt niszczenia przez gracza w pliku OutlineSelection!!!
 	{
 		if (other.gameObject.CompareTag("Ship"))
 		{
+			BeforeDestroy();
 			Destroy(this.gameObject);
 			ShipDurability ship = shipObj.GetComponent<ShipDurability>();
 			ship.ChangeDurability(-1);
@@ -29,11 +27,12 @@ public class DestroyCube : MonoBehaviour
 		}
 	}
 
-    private void OnDestroy()
+	public void BeforeDestroy()
 	{
-		ParticleSystem particleSystem = transform.parent.GetComponent<ParticleSystem>();
+		ParticleSystem particleSystem = Instantiate(cubeDestroyParticles, transform.position, Quaternion.identity);
 		particleSystem.Play();
-		AudioSource audioSource = transform.parent.GetComponent<AudioSource>();
-		audioSource.Play(); // Odtwórz dŸwiêk przed zniszczeniem obiektu
+
+		AudioSource audioSource = Instantiate(cubeDestroyAudio, transform.position, Quaternion.identity);
+		audioSource.Play();
 	}
 }

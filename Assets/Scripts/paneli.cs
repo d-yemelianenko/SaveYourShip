@@ -41,7 +41,6 @@ public class paneli : MonoBehaviour
         PanelAutor.SetActive(true);
         PanelUst.SetActive(false);
         PanelInstruction.SetActive(false);
-
     }
 
     public void PowrótCloseAutor()
@@ -50,8 +49,6 @@ public class paneli : MonoBehaviour
         PanelUst.SetActive(false);
         PanelOpc.SetActive(true);
         PanelInstruction.SetActive(false);
-
-
     }
 
     public void ButtonOpenInstruction()
@@ -60,7 +57,6 @@ public class paneli : MonoBehaviour
         PanelInstruction.SetActive(true);
         PanelUst.SetActive(false);
         PanelAutor.SetActive(false);
-
     }
 
     public void PowrótCloseInstruction()

@@ -25,9 +25,8 @@ public class VolumControl : MonoBehaviour
     }
     void Start()
     {
-        _volumeValue = PlayerPrefs.GetFloat(volumeParameter, Mathf.Log10(slider.value) * _multiplier);// na poc¹tku pobieramy zapisane parametry dzwiêku
+        _volumeValue = PlayerPrefs.GetFloat(volumeParameter, Mathf.Log10(slider.value) * _multiplier); // na poc¹tku pobieramy zapisane parametry dzwiêku
         slider.value = Mathf.Pow(10f, _volumeValue / _multiplier);
-       // Debug.Log(_volumeValue);
     }
 
     private void OnDisable()

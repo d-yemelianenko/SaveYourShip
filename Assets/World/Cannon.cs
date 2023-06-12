@@ -2,14 +2,6 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
-    /*
-    public GameObject bulletPrefab; // Prefab pocisku
-    public GameObject explosionPrefab; // Prefab efektu eksplozji
-    public AudioClip shootSound; // D�wi�k wystrza�u
-    [SerializeField]
-    public Animator animTorch;
-    public GameObject torch;*/
-    
     public Transform shootPoint; // Punkt, z kt�rego wychodzi pocisk
     private Transform highlight;
     private RaycastHit raycastHit;
@@ -32,7 +24,6 @@ public class Cannon : MonoBehaviour
 
     private void Start()
     {
-        //animTorch = torch.GetComponent<Animator>();
         isLoaded = false; 
     }
 
@@ -63,8 +54,8 @@ public class Cannon : MonoBehaviour
                         ParticleSystem particle = boomEffectMountain.GetComponent<ParticleSystem>();
                         particle.transform.position = hit.collider.transform.position;
                         particle.Play();
-                        // Zniszcz obiekt góry
-                        Destroy(hit.collider.gameObject);
+                        
+                        Destroy(hit.collider.gameObject);   // Zniszcz obiekt góry
                     }
                 }
             }
@@ -75,6 +66,4 @@ public class Cannon : MonoBehaviour
     {
         index = currentId;
     }
-
-
 }

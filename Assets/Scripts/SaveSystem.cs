@@ -18,10 +18,6 @@ public class SaveSystem : MonoBehaviour
         PlayerPosition = position;
     }
 
-    private void Update()
-    {
-        
-    }
     public void SavePlayer(CharacterStatus playerStatus)
     {
         using (StreamWriter writer = new StreamWriter(saveFilePath))
@@ -61,30 +57,20 @@ public class SaveSystem : MonoBehaviour
                 playerStatus.stamina = float.Parse(reader.ReadLine());
                 playerStatus.cold = float.Parse(reader.ReadLine());
                 playerStatus.hunger = float.Parse(reader.ReadLine());
-
-                //if (PlayerPrefs.HasKey("posX") || PlayerPrefs.HasKey("posY") || PlayerPrefs.HasKey("posZ"))
-                //{
                     Time.timeScale = 1f;
 
-                    float posX = float.Parse(reader.ReadLine());
-                    float posY = float.Parse(reader.ReadLine());
-                    float posZ = float.Parse(reader.ReadLine());
-                    float rotX = float.Parse(reader.ReadLine());
-                    float rotY = float.Parse(reader.ReadLine());
-                    float rotZ = float.Parse(reader.ReadLine());
-                    float rotW = float.Parse(reader.ReadLine());
-                    Debug.Log(rotX);
-                    PlayerTransform.position = new Vector3(posX, posY, posZ);
-                    Quaternion rotation = new Quaternion(rotX, rotY, rotZ, rotW);
-                    PlayerTransform.rotation = rotation;
-                    Debug.Log("Wczytano dane gracza.");
-                //}
-                //else
-                //{
-                //    Debug.Log("Brak pliku z danymi gracza.");
-                //}
+                float posX = float.Parse(reader.ReadLine());
+                float posY = float.Parse(reader.ReadLine());
+                float posZ = float.Parse(reader.ReadLine());
+                float rotX = float.Parse(reader.ReadLine());
+                float rotY = float.Parse(reader.ReadLine());
+                float rotZ = float.Parse(reader.ReadLine());
+                float rotW = float.Parse(reader.ReadLine());
+                Debug.Log(rotX);
+                PlayerTransform.position = new Vector3(posX, posY, posZ);
+                Quaternion rotation = new Quaternion(rotX, rotY, rotZ, rotW);
+                PlayerTransform.rotation = rotation;
             }
-            
             characterController.enabled = true;
         }
         else
@@ -102,28 +88,22 @@ public class SceneSaver : MonoBehaviour
 
     public void SaveScene()
     {
-        // Pobierz wszystkie obiekty na scenie
         GameObject[] objects = FindObjectsOfType<GameObject>();
 
-        // Utwórz listê dla danych obiektów
         List<ObjectData> objectDataList = new List<ObjectData>();
 
-        // Przeiteruj przez obiekty i zapisz ich dane
         foreach (GameObject obj in objects)
         {
             ObjectData objectData = new ObjectData();
             objectData.name = obj.name;
             objectData.position = obj.transform.position;
             objectData.rotation = obj.transform.rotation;
-            // Dodaj inne potrzebne dane obiektu do objectData
 
             objectDataList.Add(objectData);
         }
 
-        // Zamieñ listê na JSON
         string json = JsonUtility.ToJson(objectDataList, true);
 
-        // Zapisz JSON do pliku
         System.IO.File.WriteAllText(saveFilePath, json);
 
         Debug.Log("Scene saved!");
@@ -144,23 +124,15 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadScene()
     {
-        // Odczytaj zawartoœæ pliku
         string json = System.IO.File.ReadAllText(loadFilePath);
 
-        // Deserializuj dane z formatu JSON
         List<ObjectData> objectDataList = JsonUtility.FromJson<List<ObjectData>>(json);
 
-        // Przeiteruj przez dane obiektów i odtwórz obiekty na scenie
         foreach (ObjectData objectData in objectDataList)
         {
             GameObject obj = new GameObject(objectData.name);
             obj.transform.position = objectData.position;
             obj.transform.rotation = objectData.rotation;
-            // Ustaw inne potrzebne dane obiektu na podstawie objectData
-
-            // Dodaj inne skrypty i komponenty do obiektu, jeœli s¹ potrzebne
-
-            // Dodaj obiekt do sceny lub innej kolekcji obiektów w zale¿noœci od potrzeb
         }
 
         Debug.Log("Scene loaded!");

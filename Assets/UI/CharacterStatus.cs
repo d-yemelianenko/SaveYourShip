@@ -85,19 +85,6 @@ public class CharacterStatus : MonoBehaviour
             health -= 3.0f  * Time.deltaTime;
         }
 
-        /*
-        if (health <= 50) cameraShake.ShakeMagnitudeValue(health);  //Efekty Utraty punktów zdrowia
-        if (health <= 50 && !healthy)
-        {
-            cameraShake.Shake();
-            healthy = true;
-        }
-        else if (health > 50 && healthy)
-        {
-            cameraShake.StopShake();
-            healthy = false;
-        }*/
-
         if (health <= 0)                //Przywo³anie ekranu koñca gry
         {
             Cursor.lockState = CursorLockMode.None;

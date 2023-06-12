@@ -17,21 +17,15 @@ public class Settings : MonoBehaviour
         Resolution[] resolutions = Screen.resolutions;
         res = resolutions.Distinct().ToArray();
         string[] strRes = new string[res.Length];
-        //resolutionDropdown.ClearOptions();
-        //List<string> options = new List<string>();
-        //resolutions = Screen.resolutions;
-        //int currentResolutionIndex = 0;
 
         for(int i = 0; i < res.Length; i++)
         {
-            // strRes[i] = res[i].ToString();
             strRes[i] = res[i].width.ToString() + "x" + resolutions[i].height.ToString();
         }
         resolutionDropdown.ClearOptions();
         resolutionDropdown.AddOptions(strRes.ToList());
         int savedResolutionIndex = PlayerPrefs.GetInt("ResolutionPreference", res.Length - 1);
         resolutionDropdown.value = savedResolutionIndex;
-        //resolutionDropdown.value = res.Length - 1;
         Screen.SetResolution(res[savedResolutionIndex].width, res[savedResolutionIndex].height, true);
         LoadSettings(savedResolutionIndex);
         Debug.Log("Heja");

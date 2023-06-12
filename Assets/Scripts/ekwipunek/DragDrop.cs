@@ -7,7 +7,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     [Header("UI")]
     public Image image;
     
-
     [HideInInspector] public Transform parentAfterDrag;
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -25,9 +24,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         image.raycastTarget = true;
-       
-       // image.enabled = false;
-       // image.sprite = null;
         transform.SetParent(parentAfterDrag);
     }
 

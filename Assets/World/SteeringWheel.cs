@@ -61,8 +61,6 @@ public class SteeringWheel : MonoBehaviour
                 if (xPosition < 22) xPosition += 0.1f;
                 else xPosition -= 0.1f;
             }
-            //float rotationAngleY = transform.rotation.eulerAngles.y - (rotationInput);
-            //transform.parent.rotation = Quaternion.Euler(0f, -rotationAngleY, 0f);
         }
 
         // Rotate the steering wheel based on player input

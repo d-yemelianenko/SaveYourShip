@@ -15,6 +15,7 @@ TagManager:
   - Inventory
   - IceCube
   - Cannon
+  - Hand
   layers:
   - Default
   - TransparentFX

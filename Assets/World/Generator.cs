@@ -82,7 +82,7 @@ public class Generator : MonoBehaviour
                 {
                     int randomFish = rnd.Next(0, fishes.Length);
 
-                    fishes[randomFish] = Instantiate(fishes[randomFish], new Vector3(cubePosition[0] + x, cubePosition[1] - 0.7f, cubePosition[2] + z), Quaternion.identity);
+                    fishes[randomFish] = Instantiate(fishes[randomFish], new Vector3(cubePosition[0] + x, cubePosition[1] - 1.3f, cubePosition[2] + z), Quaternion.identity);
                     fishes[randomFish].transform.parent = fishesParentObject.transform;
                 }
 
